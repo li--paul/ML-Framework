@@ -3,6 +3,7 @@
 
 #include "lr_2d.hpp"
 #include <cassert>
+#define DEBUG
 
 float hypothesis(float x, float m, float c) {
     return (m * x + c);
@@ -88,6 +89,10 @@ weights perform_linear_regression_2d(  lr_2d_input input,
         w.m -= m_slope;
         w.c -= c_slope;  
         iter++;
+
+#ifdef DEBUG
+        cerr<<"epoch - "<<iter<<" | "<< "cost - "<<cost_function(input.input_x, input.input_y, w.m, w.c)<<endl;
+#endif
     }
     
     return w;
