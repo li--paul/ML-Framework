@@ -4,6 +4,32 @@
 #include "lr_2d.hpp"
 #include <cassert>
 
+float hypothesis(float x, float m, float c) {
+    return (m * x + c);
+} 
+
+float cost_function(vector<float> input_x,
+                    vector<float> input_y,
+                    float m,
+                    float c) {
+    assert(input_x.size() == input_y.size());
+    int n = input_x.size();
+    float cost = 0;
+
+    /*
+     * Note : n is the number of input points
+     * Note : hypothesis h(x) = m * x + c
+     * Cost function : summation over all inputs( (h(x) - y) * (h(x) - y) )
+     *
+     */
+    for(int iter = 0; iter < n; iter++) {
+        cost += (hypothesis(input_x[iter], m, c) - input_y[iter]) *
+                (hypothesis(input_x[iter], m, c) - input_y[iter]); 
+    } 
+    
+    return cost;
+}
+
 float cost_function_m_slope(vector<float> input_x,
                             vector<float> input_y,
                             float m,
@@ -12,7 +38,7 @@ float cost_function_m_slope(vector<float> input_x,
 
     /*
      * Note : n is the number of input points
-     * Cost function : [ (1/2n) * summation over all inputs( (2*m*x*x) + (2*x*x*c) - (2*x*y)) ]
+     * Cost function derivative w.r.t. m : [ (1/2n) * summation over all inputs( (2*m*x*x) + (2*x*x*c) - (2*x*y)) ]
      *
      */
     int n = input_x.size();
@@ -34,7 +60,7 @@ float cost_function_c_slope(vector<float> input_x,
 
     /*
      * Note : n is the number of input points
-     * Cost function : [ (1/2n) * summation over all inputs((2*c) + (2*m*x) - (2*y)) ]
+     * Cost function derivative w.r.t. c : [ (1/2n) * summation over all inputs((2*c) + (2*m*x) - (2*y)) ]
      *
      */
     int n = input_x.size();
