@@ -36,8 +36,8 @@ typedef struct lr_2d_input {
     
     lr_2d_input() {
         /* def values */
-        learning_rate = 0.2;
-        epoch = 1000;
+        learning_rate = 0.0001;
+        epoch = 10000;
     }
     
     lr_2d_input(vector<float> input_x_, vector<float> input_y_, float learning_rate_, int epoch_) {
@@ -50,8 +50,8 @@ typedef struct lr_2d_input {
     lr_2d_input(vector<float> input_x_, vector<float> input_y_) {
         input_x = input_x_;
         input_y = input_y_;
-        learning_rate = 0.2;
-        epoch = 1000;
+        learning_rate = 0.0001;
+        epoch = 10000;
     }
 }lr_2d_input;
 

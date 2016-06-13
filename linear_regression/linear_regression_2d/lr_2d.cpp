@@ -3,6 +3,7 @@
 
 #include "lr_2d.hpp"
 #include <cassert>
+#define DEBUG
 
 float cost_function_m_slope(vector<float> input_x,
                             vector<float> input_y,
@@ -59,6 +60,9 @@ weights perform_linear_regression_2d(  lr_2d_input input,
     while(iter < input.epoch) {
         float m_slope = cost_function_m_slope(input.input_x, input.input_y, w.m, w.c) * input.learning_rate;
         float c_slope = cost_function_c_slope(input.input_x, input.input_y, w.m, w.c) * input.learning_rate;
+#ifdef DEBUG
+        cerr<<"m_slope "<<m_slope<<" | "<<"c_slope "<<c_slope<<endl;
+#endif
         w.m -= m_slope;
         w.c -= c_slope;  
         iter++;
