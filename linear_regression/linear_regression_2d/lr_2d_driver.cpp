@@ -26,10 +26,18 @@ int main() {
     
     fill_inputs(x, y);
     lr_2d_input ip = lr_2d_input(x, y);
-    weights w = perform_linear_regression_2d(ip);
-    /* Print weights */
-    cout<<" m - "<<w.m<<endl;
-    cout<<" c - "<<w.c<<endl; 
+    weights w = weights();
+    
+    int cont = 1;
+    while(cont) {
+        w = perform_linear_regression_2d(ip, w);
+        /* Print weights */
+        cout<<" m - "<<w.m<<endl;
+        cout<<" c - "<<w.c<<endl; 
+
+        cout<<"Press 1 to cont. regression; Anything else to abort"<<endl;
+        cin>>cont;
+    }
 
     return 0;
 }
