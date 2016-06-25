@@ -1,5 +1,5 @@
 
-/* Defines functions in lr_2d.hpp */
+/* Defines functions in lr.hpp */
 
 #include "lr.hpp"
 #include <cassert>

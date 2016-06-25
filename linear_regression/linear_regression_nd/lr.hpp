@@ -1,8 +1,8 @@
-#ifndef __LR_2D_H__
-#define __LR_2D_H__
+#ifndef __LR_HPP__
+#define __LR_HPP__
 
-/* This file declares the headers to use
- * linear regression 2D code;
+/* This file declares the functions to use
+ * linear regression code;
  */
 
 #include <iostream>
@@ -70,4 +70,4 @@ typedef struct lr_input {
 
 weights perform_linear_regression(lr_input input, weights init_weights = weights());
 
-#endif // __LR_2D_H__
+#endif // __LR_HPP__
