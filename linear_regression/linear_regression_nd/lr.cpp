@@ -2,6 +2,7 @@
 /* Defines functions in lr.hpp */
 
 #include "lr.hpp"
+#include "lr_utils.hpp"
 #include <cassert>
 #define DEBUG
 
