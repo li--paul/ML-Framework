@@ -115,6 +115,8 @@ float perform_linear_regression(  const lr_input &input,
     ERR_OUT(input.features.size() == 0);
     ERR_OUT(input.features[0].size() == 0);
     ERR_OUT(input.features.size() != input.y.size());
+    ERR_OUT(!(init_weights.w.size() == 0) &&
+            (init_weights.w.size() != input.features[0].size() + 1));
     /* Check all feature vectors are of same length */
     int num_features = input.features[0].size();
     for(unsigned int feature_iter = 0; feature_iter < input.features.size(); feature_iter++) {
@@ -126,16 +128,16 @@ float perform_linear_regression(  const lr_input &input,
      */
     if(init_weights.w.size() == 0) {
         /* Initialize Random weights */
-        result_weights = weights(num_features + 1);
+        result_weights.w = weights(num_features + 1).w;
     } else {
-        result_weights = init_weights;
+        result_weights.w = init_weights.w;
     }
 
     /* Use references from here on */
     vector<float> &w = result_weights.w;
     const vector<float> &y = input.y;
     const vector<vector<float> > &features = input.features;
-    
+
     int iter = 0;
     while(iter < input.epoch) {
         vector<float> weight_slopes;
@@ -157,7 +159,7 @@ float perform_linear_regression(  const lr_input &input,
         cerr<<"epoch - "<<iter<<" | "<< "cost - "<<cost_function(features, y, w)<<endl;
 #endif
     }
-    
+
     return 0;
 }
 
