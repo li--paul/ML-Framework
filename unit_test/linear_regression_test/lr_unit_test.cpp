@@ -219,8 +219,8 @@ bool cost_function_weight_slope_test() {
  */
 bool lr_core_test() {
     
-    weights rw = weights("rw");
-    weights iw = weights("iw");
+    weights rw;
+    weights iw;
     /* Jagged features */
     vector<vector<float> > jagged;
     jagged = rand_vector_vector_float(5, 2);

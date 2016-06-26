@@ -29,8 +29,7 @@ typedef struct weights {
            w.push_back(rand() % 100);
         }
     }
-    weights(int n, vector<float> w_) {
-        assert(w_.size() == n);
+    weights(vector<float> w_) {
         w = w_;
     }
 }weights; 
