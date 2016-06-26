@@ -68,6 +68,11 @@ typedef struct lr_input {
     }
 }lr_input;
 
-weights perform_linear_regression(lr_input input, weights init_weights = weights());
+/*
+ * Perform linear regression for the given data points;
+ * Return FLT_MAX incase of error;
+ * Return 0 incase of success;
+ */
+float perform_linear_regression(const lr_input &input, weights &result, const weights &init_weights);
 
 #endif // __LR_HPP__
