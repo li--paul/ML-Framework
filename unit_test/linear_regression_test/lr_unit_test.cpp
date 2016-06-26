@@ -123,19 +123,112 @@ int cost_function_test() {
     return true;
 }
 
+/*
+ * Test cost_function_weight_slope().
+ * Return true if all test passed.
+ * Return false if atleast one test failed.
+ */
+bool cost_function_weight_slope_test() {
+
+    /* Jagged features */
+    vector<vector<float> > jagged;
+    jagged = rand_vector_vector_float(5, 2);
+    jagged.push_back(rand_vector_float(4));
+    jagged.push_back(rand_vector_float(2));
+    jagged.push_back(rand_vector_float(5));
+
+    /* Custom test case */
+    vector<vector<float> > f;
+    vector<float> y;
+    vector<float> w;
+
+    f.resize(3);
+    f[0].push_back(1); f[0].push_back(2); f[0].push_back(3);
+    f[1].push_back(4); f[1].push_back(5); f[1].push_back(6);
+    f[2].push_back(7); f[2].push_back(8); f[2].push_back(9);
+
+    y.push_back(33); y.push_back(3); y.push_back(4);
+
+    w.push_back(2); w.push_back(3); w.push_back(4); w.push_back(10);
+
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      vector<float> (),     vector<float> (),      1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      vector<float> (),     rand_vector_float(3),  1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      rand_vector_float(2), vector<float> (),      1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     vector<float> (),      1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), vector<float> (),      1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     rand_vector_float(4),  1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      rand_vector_float(2), rand_vector_float(3),  1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(2), vector<float> (),      1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     rand_vector_float(2),  1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(32), 1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(1), rand_vector_float(4),  1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(jagged,                         rand_vector_float(5), rand_vector_float(6),  1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(jagged,                         rand_vector_float(3), rand_vector_float(4),  1) != FLT_MAX);
+
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      vector<float> (),     vector<float> (),      -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      vector<float> (),     rand_vector_float(3),  -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      rand_vector_float(2), vector<float> (),      -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     vector<float> (),      -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), vector<float> (),      -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     rand_vector_float(4),  -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      rand_vector_float(2), rand_vector_float(3),  -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(2), vector<float> (),      -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     rand_vector_float(2),  -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(32), -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(1), rand_vector_float(4),  -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(jagged,                         rand_vector_float(5), rand_vector_float(6),  -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(jagged,                         rand_vector_float(3), rand_vector_float(4),  -1) != FLT_MAX);
+
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      vector<float> (),     vector<float> (),      100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      vector<float> (),     rand_vector_float(3),  100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      rand_vector_float(2), vector<float> (),      100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     vector<float> (),      100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), vector<float> (),      100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     rand_vector_float(4),  100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(vector<vector<float> > (),      rand_vector_float(2), rand_vector_float(3),  100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(2), vector<float> (),      100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), vector<float> (),     rand_vector_float(2),  100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(32), 100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(1), rand_vector_float(4),  100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(jagged,                         rand_vector_float(5), rand_vector_float(6),  100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(jagged,                         rand_vector_float(3), rand_vector_float(4),  100) != FLT_MAX);
+
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(4), -1) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(4), 100) != FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(4), 4) != FLT_MAX);
+
+    /* Success cases */
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(4), 0) == FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(4), 1) == FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(4), 2) == FLT_MAX);
+    ERR_OUT(cost_function_weight_slope(rand_vector_vector_float(3, 3), rand_vector_float(3), rand_vector_float(4), 3) == FLT_MAX);
+
+    /* Custom sucess case */
+    ERR_OUT((int)cost_function_weight_slope(f, y, w, 3) != (int)((float)131/(float)f.size()) );
+    ERR_OUT((int)cost_function_weight_slope(f, y, w, 1) != (int)((float)904/(float)f.size()) );
+    ERR_OUT((int)cost_function_weight_slope(f, y, w, 2) != (int)((float)1035/(float)f.size()) );
+    ERR_OUT((int)cost_function_weight_slope(f, y, w, 0) != (int)((float)773/(float)f.size()) );
+
+    return true;
+}
+
 void print_result(bool hypothesis_success, 
-                  bool cost_function_success) {
+                  bool cost_function_success,
+                  bool cost_function_weight_slope_success) {
 
     string hypothesis_test_str = hypothesis_success ? "Success" : "Fail";
     string cost_function_test_str = cost_function_success? "Success" : "Fail";
+    string cost_function_weight_slope_test_str = cost_function_weight_slope_success? "Success" : "Fail";
 
-    cout<<"hypthesis()     - "<<hypothesis_test_str<<endl;
-    cout<<"cost_function() - "<<cost_function_test_str<<endl;
+    cout<<"hypthesis()                  - "<<hypothesis_test_str<<endl;
+    cout<<"cost_function()              - "<<cost_function_test_str<<endl;
+    cout<<"cost_function_weight_slope() - "<<cost_function_weight_slope_test_str<<endl;
 }
 
 int main() {
     /* Print result */
     print_result(hypothesis_test(),
-                 cost_function_test());
+                 cost_function_test(),
+                 cost_function_weight_slope_test());
     return 0;
 }
