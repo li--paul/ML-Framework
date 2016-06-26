@@ -212,23 +212,81 @@ bool cost_function_weight_slope_test() {
     return true;
 }
 
+/*
+ * Test perform_linear_regression()
+ * Return true if all tests passed.
+ * Return false if atleast one test failed.
+ */
+bool lr_core_test() {
+    
+    weights rw = weights("rw");
+    weights iw = weights("iw");
+    /* Jagged features */
+    vector<vector<float> > jagged;
+    jagged = rand_vector_vector_float(5, 2);
+    jagged.push_back(rand_vector_float(4));
+    jagged.push_back(rand_vector_float(2));
+    jagged.push_back(rand_vector_float(5));
+    /* Custom test case */
+    vector<vector<float> > f;
+    vector<float> y;
+    vector<float> w;
+
+    f.resize(3);
+    f[0].push_back(1); f[0].push_back(2); f[0].push_back(3);
+    f[1].push_back(4); f[1].push_back(5); f[1].push_back(6);
+    f[2].push_back(7); f[2].push_back(8); f[2].push_back(9);
+    y.push_back(33); y.push_back(3); y.push_back(4);
+    w.push_back(2); w.push_back(3); w.push_back(4); w.push_back(10);
+
+    //ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      vector<float> ()),     rw, iw) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), vector<float> ()),     rw, iw) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      rand_vector_float(4)), rw, iw) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      vector<float> ()),     rw, weights(34)) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), vector<float> ()),     rw, weights(4)) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      rand_vector_float(4)), rw, weights(4)) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(66)) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(3)) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(2)) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(4)), rw, weights(4)) != FLT_MAX);
+    //ERR_OUT(perform_linear_regression(lr_input(jagged,                         rand_vector_float(5)), rw, weights(6)) != FLT_MAX);
+
+    /* Success cases */
+    lr_input ip(f, y, 0.00001, 10);
+    ERR_OUT(perform_linear_regression(ip, rw, weights(w)) != 0);
+    ERR_OUT(rw.w.size() != f[0].size() + 1);
+    float cost_before = cost_function(f, y, w);
+    float cost_after = cost_function(f, y, rw.w);
+    ERR_OUT(cost_after >= cost_before);
+
+    ERR_OUT(perform_linear_regression(ip, rw, iw) != 0);
+    ERR_OUT(rw.w.size() != f[0].size() + 1);
+
+
+    return true;
+}
+
 void print_result(bool hypothesis_success, 
                   bool cost_function_success,
-                  bool cost_function_weight_slope_success) {
+                  bool cost_function_weight_slope_success,
+                  bool lr_core_success) {
 
     string hypothesis_test_str = hypothesis_success ? "Success" : "Fail";
     string cost_function_test_str = cost_function_success? "Success" : "Fail";
     string cost_function_weight_slope_test_str = cost_function_weight_slope_success? "Success" : "Fail";
+    string lr_core_test_str = lr_core_success? "Success" : "Fail";
 
     cout<<"hypthesis()                  - "<<hypothesis_test_str<<endl;
     cout<<"cost_function()              - "<<cost_function_test_str<<endl;
     cout<<"cost_function_weight_slope() - "<<cost_function_weight_slope_test_str<<endl;
+    cout<<"perform_linear_regression()  - "<<lr_core_test_str<<endl; 
 }
 
 int main() {
     /* Print result */
     print_result(hypothesis_test(),
                  cost_function_test(),
-                 cost_function_weight_slope_test());
+                 cost_function_weight_slope_test(),
+                 lr_core_test());
     return 0;
 }
