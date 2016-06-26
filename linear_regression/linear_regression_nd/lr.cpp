@@ -45,7 +45,7 @@ float cost_function(const vector<vector<float> > &features,
      * Cost function : summation over all inputs( (h(x0, x1 ...xk) - y) * (h(x0, x1 ...xk) - y) )
      */
     for(int iter = 0; iter < n; iter++) {
-        assert(features[iter].size == w.size() - 1);
+        assert(features[iter].size() == w.size() - 1);
 
         float hypothesis_result = hypothesis(features[iter], w);
         assert(hypothesis_result != FLT_MAX);
@@ -82,7 +82,7 @@ float cost_function_weight_slope(   const vector<vector<float> > &features,
     float slope = 0;
 
     for(int iter = 0; iter < n; iter++) {
-        assert(features[iter].size == w.size() - 1);
+        assert(features[iter].size() == w.size() - 1);
 
         float hypothesis_result = hypothesis(features[iter], w);
         assert(hypothesis_result != FLT_MAX);
