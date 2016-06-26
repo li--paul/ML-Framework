@@ -70,10 +70,17 @@ float cost_function_weight_slope(   const vector<vector<float> > &features,
                                     const vector<float> &y,
                                     const vector<float> &w,
                                     const int weight_index) {
+    ERR_OUT(features.size() == 0);
+    ERR_OUT(y.size() == 0);
+    ERR_OUT(w.size() == 0);
     ERR_OUT(features[0].size() != w.size() - 1);
     ERR_OUT(features.size() != y.size());
     ERR_OUT(weight_index >= w.size());
     ERR_OUT(weight_index < 0);
+
+    for(unsigned int iter = 0; iter < features.size(); iter++) {
+        ERR_OUT(features[iter].size() != w.size() - 1);
+    }
 
     /*
      * Note : n is the number of input points
@@ -87,12 +94,10 @@ float cost_function_weight_slope(   const vector<vector<float> > &features,
     float slope = 0;
 
     for(int iter = 0; iter < n; iter++) {
-        assert(features[iter].size() == w.size() - 1);
-
         float hypothesis_result = hypothesis(features[iter], w);
         assert(hypothesis_result != FLT_MAX);
         slope += (hypothesis_result - y[iter]) * 
-                 (features[iter][weight_index] * this_weight_is_not_bias); 
+                 ((features[iter][weight_index] * this_weight_is_not_bias) + (1 * !this_weight_is_not_bias)); 
     } 
     
     return (slope * ((float)1 / (float)(n)));
