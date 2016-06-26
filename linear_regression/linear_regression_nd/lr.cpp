@@ -34,10 +34,17 @@ float hypothesis(const vector<float> &feature_vector, const vector<float> &w) {
 float cost_function(const vector<vector<float> > &features,
                     const vector<float> &y,
                     const vector<float> &w) {
+    ERR_OUT(features.size() == 0);
+    ERR_OUT(y.size() == 0);
+    ERR_OUT(w.size() == 0);
     ERR_OUT(features[0].size() != w.size() - 1);
     ERR_OUT(features.size() != y.size());
     int n = features.size();
     float cost = 0;
+
+    for(int iter = 0; iter < n; iter++) {
+        ERR_OUT(features[iter].size() != w.size() - 1);
+    }
 
     /*
      * Note : n is the number of rows in dataset
@@ -45,8 +52,6 @@ float cost_function(const vector<vector<float> > &features,
      * Cost function : summation over all inputs( (h(x0, x1 ...xk) - y) * (h(x0, x1 ...xk) - y) )
      */
     for(int iter = 0; iter < n; iter++) {
-        assert(features[iter].size() == w.size() - 1);
-
         float hypothesis_result = hypothesis(features[iter], w);
         assert(hypothesis_result != FLT_MAX);
         cost += (hypothesis_result - y[iter]) *
@@ -150,3 +155,4 @@ float perform_linear_regression(  const lr_input &input,
     
     return 0;
 }
+
