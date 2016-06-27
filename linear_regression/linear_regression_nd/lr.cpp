@@ -138,6 +138,7 @@ float perform_linear_regression(  const lr_input &input,
     const vector<float> &y = input.y;
     const vector<vector<float> > &features = input.features;
 
+
     int iter = 0;
     while(iter < input.epoch) {
         vector<float> weight_slopes;
@@ -150,7 +151,7 @@ float perform_linear_regression(  const lr_input &input,
         assert(weight_slopes.size() == w.size());
         /* Update weights */
         for(unsigned int weight_iter = 0; weight_iter < w.size(); weight_iter++) {
-            w[iter] -= weight_slopes[iter];
+            w[weight_iter] -= weight_slopes[weight_iter];
         }
 
         iter++;
