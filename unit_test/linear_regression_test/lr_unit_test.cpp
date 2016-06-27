@@ -239,17 +239,17 @@ bool lr_core_test() {
     y.push_back(33); y.push_back(3); y.push_back(4);
     w.push_back(2); w.push_back(3); w.push_back(4); w.push_back(10);
 
-    //ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      vector<float> ()),     rw, iw) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), vector<float> ()),     rw, iw) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      rand_vector_float(4)), rw, iw) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      vector<float> ()),     rw, weights(34)) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), vector<float> ()),     rw, weights(4)) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      rand_vector_float(4)), rw, weights(4)) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(66)) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(3)) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(2)) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(4)), rw, weights(4)) != FLT_MAX);
-    //ERR_OUT(perform_linear_regression(lr_input(jagged,                         rand_vector_float(5)), rw, weights(6)) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      vector<float> ()),     rw, iw) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), vector<float> ()),     rw, iw) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      rand_vector_float(4)), rw, iw) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      vector<float> ()),     rw, weights(34)) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), vector<float> ()),     rw, weights(4)) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(vector<vector<float> > (),      rand_vector_float(4)), rw, weights(4)) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(66)) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(3)) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(3)), rw, weights(2)) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(rand_vector_vector_float(3, 3), rand_vector_float(4)), rw, weights(4)) != FLT_MAX);
+    ERR_OUT(perform_linear_regression(lr_input(jagged,                         rand_vector_float(5)), rw, weights(6)) != FLT_MAX);
 
     /* Success cases */
     lr_input ip(f, y, 0.00001, 10);
