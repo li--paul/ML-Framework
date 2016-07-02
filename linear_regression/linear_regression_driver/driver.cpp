@@ -14,7 +14,7 @@ void print_help() {
     string help = " The program expects 4 arguments always;                                        \n\
                     Argument 1 : Name of the .csv file that contains data                          \n\
                     Argument 2 : Name of the .csv file that conatins initial                       \n\
-                                 weights (Pass \"def_weights.csv\" to use random weights)          \n\
+                                 weights (Pass 0 to use random weights)                            \n\
                     Argument 3 : Learning rate of the algorithm (pass zero to use default values)  \n\
                     Argument 4 : Epoch (padd negative number to use default value) ";
     cout<<help<<endl;
@@ -45,8 +45,9 @@ vector<string> get_lines(string file_name) {
 
     /* Buffer to hold file contents */
     char *file_contents = NULL;
-    file_contents = (char *)malloc(file_size);
+    file_contents = (char *)malloc(file_size + 1);
     assert(file_contents != NULL && "Cannot malloc memory");
+    file_contents[file_size] = '\0';
 
     int num_read = fread(file_contents, 1, file_size, fp);
     assert(num_read == file_size && "File not read properly");
@@ -92,6 +93,22 @@ vector<vector<string> > get_tokens(vector<string> lines) {
     return tokens;
 }
 
+vector<vector<float> > get_tokens_as_float(string file_name) {
+    vector<string> lines = get_lines(file_name);
+    vector<vector<string> > tokens = get_tokens(lines);
+    vector<vector<float> > tok_as_float;
+
+    for(unsigned int token_i = 0; token_i < tokens.size(); token_i++) {
+        vector<float> ip;
+        for(unsigned int token_j = 0; token_j < tokens[token_i].size(); token_j++) {
+            double value = atof(tokens[token_i][token_j].c_str());
+            ip.push_back((float)value);
+        }
+        tok_as_float.push_back(ip);
+    }
+    return tok_as_float;
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 5) {
         print_help();
@@ -110,12 +127,10 @@ int main(int argc, char *argv[]) {
     cout<<"Weights file  - "<<weights_file_arg<<endl;
     cout<<"Learning rate - "<<learning_rate_arg<<endl;
     cout<<"Epoch arg     - "<<epoch_arg<<endl;
-#endif
 
     vector<string> lines = get_lines(input_file_arg);
     vector<vector<string> > tokens = get_tokens(lines);
 
-#ifdef DEBUG
     /* Print lines */
     cout<<"--- Lines ----"<<endl;
     for(unsigned int iter = 0; iter < lines.size(); iter++) {
@@ -132,6 +147,31 @@ int main(int argc, char *argv[]) {
     }
     cout<<"----------------"<<endl;
 #endif
-    return 0;
 
+    vector<vector<float> > inputs = get_tokens_as_float(input_file_arg);
+    vector<vector<float> > init_weights;
+    if(weights_file_arg != "0") {
+        init_weights = get_tokens_as_float(weights_file_arg);
+        assert(init_weights.size() == 1);
+    } else {
+        init_weights.push_back(vector<float> ());
+    } 
+
+#ifdef DEBUG
+    cout<<"--- Inputs ---"<<endl;
+    for(unsigned int input_i = 0; input_i < inputs.size(); input_i++) {
+        for(unsigned int input_j = 0; input_j < inputs[input_i].size(); input_j++) {
+            cout<<inputs[input_i][input_j]<<", ";
+        }
+        cout<<endl;
+    }
+    cout<<"--------------"<<endl;
+    cout<<"--- Weights ---"<<endl;
+    for(unsigned int weight_iter = 0; weight_iter < init_weights[0].size(); weight_iter++) {
+        cout<<init_weights[0][weight_iter]<<" ";
+    }
+    cout<<endl<<"---------------"<<endl;
+#endif
+
+    return 0;
 }
