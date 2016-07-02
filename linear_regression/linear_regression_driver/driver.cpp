@@ -20,6 +20,23 @@ void print_help() {
     cout<<help<<endl;
 }
 
+template<typename T> 
+void print_vector(vector<T> vec) {
+    for(unsigned int iter = 0; iter < vec.size(); iter++) {
+        cout<<vec[iter]<<endl;
+    }
+    cout<<endl;
+}
+
+template<typename T>
+void print_vector_vector(vector<vector<T> > vec) {
+    for(unsigned int i = 0; i < vec.size(); i++) {
+        for(unsigned int j = 0; j < vec[i].size(); j++) {
+            cout<<vec[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
 /*
  * Returns the size of the file
  */
@@ -133,18 +150,11 @@ int main(int argc, char *argv[]) {
 
     /* Print lines */
     cout<<"--- Lines ----"<<endl;
-    for(unsigned int iter = 0; iter < lines.size(); iter++) {
-        cout<<lines[iter]<<endl;
-    }
+    print_vector(lines);
     cout<<"-------------"<<endl;
     /* Print tokens */
     cout<<"--- Tokens ----"<<endl;
-    for(unsigned int token_i = 0; token_i < tokens.size(); token_i++) {
-        for(unsigned int token_j = 0; token_j < tokens[token_i].size(); token_j++) {
-            cout<<tokens[token_i][token_j]<<", ";
-        }
-        cout<<endl;
-    }
+    print_vector_vector(tokens);
     cout<<"----------------"<<endl;
 #endif
 
@@ -159,17 +169,10 @@ int main(int argc, char *argv[]) {
 
 #ifdef DEBUG
     cout<<"--- Inputs ---"<<endl;
-    for(unsigned int input_i = 0; input_i < inputs.size(); input_i++) {
-        for(unsigned int input_j = 0; input_j < inputs[input_i].size(); input_j++) {
-            cout<<inputs[input_i][input_j]<<", ";
-        }
-        cout<<endl;
-    }
+    print_vector_vector(inputs);
     cout<<"--------------"<<endl;
     cout<<"--- Weights ---"<<endl;
-    for(unsigned int weight_iter = 0; weight_iter < init_weights[0].size(); weight_iter++) {
-        cout<<init_weights[0][weight_iter]<<" ";
-    }
+    print_vector_vector(init_weights);
     cout<<endl<<"---------------"<<endl;
 #endif
 
