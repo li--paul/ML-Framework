@@ -126,9 +126,35 @@ vector<vector<float> > get_tokens_as_float(string file_name) {
     return tok_as_float;
 }
 
+bool validate_inputs(vector<vector<float> > &ip, vector<vector<float> > &w) {
+    unsigned int num_rows = ip.size();
+    if(num_rows == 0) {
+        cerr<<"Inputs not available"<<endl;
+        return false;
+    }
+    unsigned int num_cols = ip[0].size();
+    /* Check for data consistency */
+    for(unsigned int row = 0; row < num_rows; row++) {
+        if(ip[row].size() != num_cols) {
+            cerr<<"Inputs jagged! "<<endl;
+            return false;
+        }
+    }
+
+    if(w.size() != 0) {
+        /* Not random */
+        if(w[0].size() != ip[0].size()) {
+            cerr<<"Not enough weights "<<endl;
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 5) {
         print_help();
+        cerr<<"Arguments not proper !"<<endl;
         return -1;
     }
 
@@ -166,6 +192,11 @@ int main(int argc, char *argv[]) {
     } else {
         init_weights.push_back(vector<float> ());
     } 
+
+    if(!validate_inputs(inputs, init_weights)) {
+        return -1;
+    }
+
 
 #ifdef DEBUG
     cout<<"--- Inputs ---"<<endl;
