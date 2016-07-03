@@ -158,6 +158,7 @@ bool validate_csv(const string file_name) {
            || (ascii == 101)                // e
            || (ascii == 43)                 // +
            || (ascii == 45)                 // -
+           || (ascii == 44)                 // comma
            ) { 
             /* Valid character */
         } else {
