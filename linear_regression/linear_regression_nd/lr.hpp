@@ -81,13 +81,23 @@ typedef struct lr_input {
 
 /*
  * Construct lr_input from a given csv file;
+ * Arguments :
+ *      ip        - Result object that is filled
+ *      filename  - Name of the csv file
+ * Returns 0 for success
+ * Returns -1 for failure
  */
-lr_input construct_input(const string filename); 
+int construct_input(lr_input &ip, const string filename); 
 
 /*
  * Construct weights from a given csv file;
+ * Arguments :
+ *      w        - Result object that is filled
+ *      filename - Name of the csv file
+ * Returns 0 for success
+ * Returns -1 for success
  */
-weights construct_weights(const string filename);
+int construct_weights(weights &w, const string filename);
 
 /*
  * Perform linear regression for the given data points;

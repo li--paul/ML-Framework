@@ -37,11 +37,35 @@ void split_csv_vector(vector<vector<float> > &inputs, vector<vector<float> > &f,
 
 /*
  * Construct lr_input from a given csv file;
+ * Arguments :
+ *      ip        - Result object that is filled
+ *      filename  - Name of the csv file
+ * Returns 0 for success
+ * Returns -1 for failure
  */
-lr_input construct_input(const string filename) {
+int construct_input(lr_input &ip, const string filename) {
     vector<vector<float> > inputs = csv_vec_vec_float(filename);
-    assert(inputs.size() != 0);
-    assert(inputs[0].size() >=2);
+    if(inputs.size() == 0) {
+        cerr<<"Inputs are empty "<<__FILE__<<" "<<__LINE__<<endl;
+        return -1;
+    }
+
+    unsigned int data_rows = inputs.size();
+    unsigned int data_cols = inputs[0].size();
+
+    /* Gotta have atleast one feature and one output */
+    if(data_cols < 2) {
+        cerr<<"No y in inputs "<<__FILE__<<" "<<__LINE__<<endl;
+        return -1;
+    }
+
+    /* Check for jagged matrix */
+    for(unsigned int row = 0; row < data_rows; row++) {
+        if(inputs[row].size() != data_cols) {
+            cerr<<"Inputs are jagged "<<__FILE__<<" "<<__LINE__<<endl;
+            return -1;
+        }
+    }
 
     vector<vector<float> > features;
     vector<float> y;
@@ -49,21 +73,30 @@ lr_input construct_input(const string filename) {
     assert(features.size() == y.size());
     assert(features.size() != 0);
 
-    return lr_input(features, y);
+    ip = lr_input(features, y);
+
+    return 0;
 }
 
 /*
  * Construct weights from a given csv file;
+ * Arguments :
+ *      w        - Result object that is filled
+ *      filename - Name of the csv file
+ * Returns 0 for success
+ * Returns -1 for success
  */
-weights construct_weights(const string filename) {
+int construct_weights(weights &w, const string filename) {
     vector<vector<float> > w_csv = csv_vec_vec_float(filename) ;
-    if(w_csv.size() == 0) {
-        return weights();
-    } else {
-        return weights(w_csv[0]);
+    if(w_csv.size() != 0) {
+        if(w_csv[0].size() == 0) {
+            cerr<<"Error in weights csv "<<__FILE__<<" "<<__LINE__<<endl;
+            return -1;
+        } 
+        w = weights(w_csv[0]);
     }
+    return 0;
 }
-
 
 /*
  * Given features and weights, evaluate the hypothesis function.
