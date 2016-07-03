@@ -6,6 +6,7 @@
 #include "./../../utils/csv_helper.hpp"
 #include <cassert>
 #include <cfloat>
+#include <cstdio>
 
 #define ERR_OUT(stmt) if(stmt) { cerr<<"Error out - "<<__FILE__<<" - "<<__LINE__<<endl;  return FLT_MAX; }
 
@@ -252,12 +253,10 @@ float perform_linear_regression(  const lr_input &input,
         for(unsigned int weight_iter = 0; weight_iter < w.size(); weight_iter++) {
             w[weight_iter] -= weight_slopes[weight_iter];
         }
-
-        iter++;
-
 #ifdef DEBUG
         cerr<<"epoch - "<<iter<<" | "<< "cost - "<<cost_function(features, y, w)<<endl;
 #endif
+        iter++;
     }
 
     return 0;
