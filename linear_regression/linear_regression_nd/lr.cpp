@@ -96,11 +96,11 @@ int construct_weights(weights &w, const string filename) {
         cerr<<"CSV to vector<vector<float> > issue "<<__FILE__<<" "<<__LINE__<<endl;
         return -1;
     }
-    if(w_csv.size() != 0) {
-        if(w_csv[0].size() == 0) {
-            cerr<<"Error in weights csv "<<__FILE__<<" "<<__LINE__<<endl;
-            return -1;
-        } 
+    if(w_csv.size() != 1 && w_csv.size() != 0) {
+        cerr<<"Error in weights csv "<<__FILE__<<" "<<__LINE__<<endl;
+        return -1;
+    }
+    if(w_csv.size() == 1) {
         w = weights(w_csv[0]);
     }
     return 0;
