@@ -9,6 +9,7 @@
 using namespace std;
 
 #include "./../linear_regression_nd/lr.hpp"
+#include "./../linear_regression_nd/lr_utils.hpp"
 
 #define DEBUG
 
@@ -258,6 +259,19 @@ int main(int argc, char *argv[]) {
     cout<<"--- Weights ---"<<endl;
     print_vector_vector(init_weights);
     cout<<endl<<"---------------"<<endl;
+
+    cout<<"Learning rate - "<<regression_input.learning_rate<<endl;
+    cout<<"epoch - "<<regression_input.epoch<<endl;
+
+    int iter = 0;
+    while(iter < 10) {
+        float ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
+        assert(ret_val == 0);
+        regression_weights = result_weights;
+        float cost = cost_function(regression_input.features, regression_input.y, result_weights.w);
+        cout<<"Iteration "<<iter<<" : "<<cost<<endl;
+        iter++;
+    }
 #endif
 
     return 0;
