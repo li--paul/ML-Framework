@@ -44,7 +44,11 @@ void split_csv_vector(vector<vector<float> > &inputs, vector<vector<float> > &f,
  * Returns -1 for failure
  */
 int construct_input(lr_input &ip, const string filename) {
-    vector<vector<float> > inputs = csv_vec_vec_float(filename);
+    vector<vector<float> > inputs;
+    if(csv_vec_vec_float(inputs, filename) != 0) {
+        cerr<<"CSV to vector<vector<float> > issue "<<__FILE__<<" "<<__LINE__<<endl;
+        return -1;
+    }
     if(inputs.size() == 0) {
         cerr<<"Inputs are empty "<<__FILE__<<" "<<__LINE__<<endl;
         return -1;
@@ -87,7 +91,11 @@ int construct_input(lr_input &ip, const string filename) {
  * Returns -1 for success
  */
 int construct_weights(weights &w, const string filename) {
-    vector<vector<float> > w_csv = csv_vec_vec_float(filename) ;
+    vector<vector<float> > w_csv;
+    if(csv_vec_vec_float(w_csv, filename) != 0) {
+        cerr<<"CSV to vector<vector<float> > issue "<<__FILE__<<" "<<__LINE__<<endl;
+        return -1;
+    }
     if(w_csv.size() != 0) {
         if(w_csv[0].size() == 0) {
             cerr<<"Error in weights csv "<<__FILE__<<" "<<__LINE__<<endl;
