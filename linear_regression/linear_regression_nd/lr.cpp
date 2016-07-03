@@ -9,6 +9,11 @@
 
 #define ERR_OUT(stmt) if(stmt) { cerr<<"Error out - "<<__FILE__<<" - "<<__LINE__<<endl;  return FLT_MAX; }
 
+#ifdef WEB_RUN
+// Dump data every 50th epoch
+#define DUMP_FREQUENCY 50
+#endif
+
 /* Define utilities first */
 /*
  * Split the csv data vector into features and expected outputs;
@@ -253,11 +258,24 @@ float perform_linear_regression(  const lr_input &input,
             w[weight_iter] -= weight_slopes[weight_iter];
         }
 
-        iter++;
 
 #ifdef DEBUG
         cerr<<"epoch - "<<iter<<" | "<< "cost - "<<cost_function(features, y, w)<<endl;
 #endif
+
+#ifdef WEB_RUN
+        if(iter % DUMP_FREQUENCY == 0 || iter == input.epoch) {
+            FILE *fp = NULL;
+            fp = fopen("./lr_dump.txt", "w+");
+            assert(fp != NULL && "Cannot open/create file");
+            for(unsigned int weight_iter = 0; weight_iter < w.size(); weight_iter++) {
+                fprintf(fp, "%f, ", w[weight_iter]);
+            }
+            fprintf(fp, " - %f \n", cost_function(features, y, w));
+            fclose(fp);
+        }
+#endif
+        iter++;
     }
 
     return 0;
