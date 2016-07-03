@@ -3,11 +3,67 @@
 
 #include "lr.hpp"
 #include "lr_utils.hpp"
+#include "./../../utils/csv_helper.hpp"
 #include <cassert>
 #include <cfloat>
 
 #define DEBUG
 #define ERR_OUT(stmt) if(stmt) { cerr<<"Error out - "<<__FILE__<<" - "<<__LINE__<<endl;  return FLT_MAX; }
+
+/* Define utilities first */
+/*
+ * Split the csv data vector into features and expected outputs;
+ */
+void split_csv_vector(vector<vector<float> > &inputs, vector<vector<float> > &f, vector<float> &y) {
+    unsigned int num_rows = inputs.size();
+    assert(num_rows != 0);
+    unsigned int num_cols = inputs[0].size();
+    assert(num_cols != 0);
+
+    /* Fill expected outputs vector */
+    for(unsigned int row = 0; row < num_rows; row++) {
+        y.push_back(inputs[row][num_cols - 1]);
+    }
+
+    /* Fill features matrix */
+    for(unsigned int row = 0; row < num_rows; row++) {
+        vector<float> feature_vector;
+        for(unsigned int col = 0; col < num_cols - 1; col++) {
+            feature_vector.push_back(inputs[row][col]);
+        }
+        f.push_back(feature_vector);
+    }
+}
+
+/*
+ * Construct lr_input from a given csv file;
+ */
+lr_input construct_input(const string filename) {
+    vector<vector<float> > inputs = csv_vec_vec_float(filename);
+    assert(inputs.size() != 0);
+    assert(inputs[0].size() >=2);
+
+    vector<vector<float> > features;
+    vector<float> y;
+    split_csv_vector(inputs, features, y);
+    assert(features.size() == y.size());
+    assert(features.size() != 0);
+
+    return lr_input(features, y);
+}
+
+/*
+ * Construct weights from a given csv file;
+ */
+weights construct_weights(const string filename) {
+    vector<vector<float> > w_csv = csv_vec_vec_float(filename) ;
+    if(w_csv.size() == 0) {
+        return weights();
+    } else {
+        return weights(w_csv[0]);
+    }
+}
+
 
 /*
  * Given features and weights, evaluate the hypothesis function.

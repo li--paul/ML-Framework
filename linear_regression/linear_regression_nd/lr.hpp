@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include <ctime>
 #include <cstdlib>
 #include <cassert>
@@ -77,6 +78,16 @@ typedef struct lr_input {
         epoch = 10000;
     }
 }lr_input;
+
+/*
+ * Construct lr_input from a given csv file;
+ */
+lr_input construct_input(const string filename); 
+
+/*
+ * Construct weights from a given csv file;
+ */
+weights construct_weights(const string filename);
 
 /*
  * Perform linear regression for the given data points;
