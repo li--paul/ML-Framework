@@ -13,9 +13,12 @@ using namespace std;
 
 /*
  * csv file -> vector<vector<float> >;
- * supports only ',' as a delimiter 
+ * supports only ',' as a delimiter;
+ * This is a wrapper function that just called get_tokens_as_float 
+ * Returns 0 for Success;
+ * Return -1 for failure;
  */
-vector<vector<float> > csv_vec_vec_float(const string file_name);
+int csv_vec_vec_float(vector<vector<float> > &op, const string file_name);
 #endif // __CSV_HELPER_HPP__
 
 
