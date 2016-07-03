@@ -185,6 +185,8 @@ int main(int argc, char *argv[]) {
 #endif
 
     vector<vector<float> > inputs = get_tokens_as_float(input_file_arg);
+    float learning_rate = (float)atof(learning_rate_arg.c_str());
+    int epoch = (int)atof(epoch_arg.c_str());
     vector<vector<float> > init_weights;
     if(weights_file_arg != "0") {
         init_weights = get_tokens_as_float(weights_file_arg);
