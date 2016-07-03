@@ -297,7 +297,7 @@ bool construct_weights_test() {
     weights w;
 
     ERR_OUT(construct_weights(w, "./no-file.txt") != -1);
-    //ERR_OUT(construct_weights(w, "./csv_weights_fail_1.txt") != -1);
+    ERR_OUT(construct_weights(w, "./csv_weights_fail_1.txt") != -1);
     ERR_OUT(construct_weights(w, "./csv_weights_fail_2.txt") != -1);
 
     /* Success case */
