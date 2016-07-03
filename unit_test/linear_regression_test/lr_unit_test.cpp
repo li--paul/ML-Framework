@@ -266,20 +266,67 @@ bool lr_core_test() {
     return true;
 }
 
+/*
+ * Test construct_input function
+ * Return true if all passed;
+ * Return false if atleast one failed;
+ */
+bool construct_input_test() {
+    lr_input ip;
+
+    ERR_OUT(construct_input(ip, "no-file.txt") != -1);
+    ERR_OUT(construct_input(ip, "./csv_fail_1.txt") != -1);
+    ERR_OUT(construct_input(ip, "./csv_fail_2.txt") != -1);
+    ERR_OUT(construct_input(ip, "./csv_fail_3.txt") != -1);
+    ERR_OUT(construct_input(ip, "./csv_fail_4.txt") != -1);
+    ERR_OUT(construct_input(ip, "./csv_fail_5.txt") != -1);
+
+    /* Success cases */
+    ERR_OUT(construct_input(ip, "./csv_success_1.txt") == -1);
+    ERR_OUT(construct_input(ip, "./csv_success_2.txt") == -1);
+
+    return true;
+}
+
+/*
+ * Test construct_weights function
+ * Return true if all passed
+ * Return false if atleast one failed
+ */
+bool construct_weights_test() {
+    weights w;
+
+    ERR_OUT(construct_weights(w, "./no-file.txt") != -1);
+    ERR_OUT(construct_weights(w, "./csv_weights_fail_1.txt") != -1);
+    ERR_OUT(construct_weights(w, "./csv_weights_fail_2.txt") != -1);
+
+    /* Success case */
+    ERR_OUT(construct_weights(w, "./csv_weights_success_1.txt") == -1);
+    ERR_OUT(construct_weights(w, "./csv_weights_success_2.txt") == -1);
+
+    return true;
+}
+
 void print_result(bool hypothesis_success, 
                   bool cost_function_success,
                   bool cost_function_weight_slope_success,
-                  bool lr_core_success) {
+                  bool lr_core_success,
+                  bool construct_input_success,
+                  bool construct_weights_success) {
 
     string hypothesis_test_str = hypothesis_success ? "Success" : "Fail";
     string cost_function_test_str = cost_function_success? "Success" : "Fail";
     string cost_function_weight_slope_test_str = cost_function_weight_slope_success? "Success" : "Fail";
     string lr_core_test_str = lr_core_success? "Success" : "Fail";
+    string construct_input_test_str = construct_input_success ? "Success" : "Fail";
+    string construct_weights_test_str = construct_weights_success ? "Success" : "Fail";
 
     cout<<"hypthesis()                  - "<<hypothesis_test_str<<endl;
     cout<<"cost_function()              - "<<cost_function_test_str<<endl;
     cout<<"cost_function_weight_slope() - "<<cost_function_weight_slope_test_str<<endl;
     cout<<"perform_linear_regression()  - "<<lr_core_test_str<<endl; 
+    cout<<"construct_input()            - "<<construct_input_test_str<<endl;
+    cout<<"construct_weights()          - "<<construct_weights_test_str<<endl;
 }
 
 int main() {
@@ -287,6 +334,8 @@ int main() {
     print_result(hypothesis_test(),
                  cost_function_test(),
                  cost_function_weight_slope_test(),
-                 lr_core_test());
+                 lr_core_test(),
+                 construct_input_test(),
+                 construct_weights_test());
     return 0;
 }
