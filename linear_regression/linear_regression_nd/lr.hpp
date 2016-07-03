@@ -32,6 +32,15 @@ typedef struct weights {
     weights(vector<float> w_) {
         w = w_;
     }
+
+    bool is_empty() const {
+        if(w.size() == 0) { return true; }
+        else              { return false; }
+    }
+
+    void clear_weights() {
+        w.clear();
+    }
 }weights; 
 
 typedef struct lr_input {
@@ -53,6 +62,7 @@ typedef struct lr_input {
     }
     
     lr_input(vector<vector<float> > features_, vector<float> y_, float learning_rate_, int epoch_) {
+        /* Make copies of the inputs vectors */
         features = features_;
         y = y_;
         learning_rate = learning_rate_;
@@ -60,6 +70,7 @@ typedef struct lr_input {
     }
 
     lr_input(vector<vector<float> > features_, vector<float> y_) {
+        /* Make copies of the input vectors */
         features = features_;
         y = y_;
         learning_rate = 0.00001;
@@ -69,6 +80,12 @@ typedef struct lr_input {
 
 /*
  * Perform linear regression for the given data points;
+ * Arguments : 
+ *      input        - Contains valid feature vectors and expected outputs
+ *      result       - The output weights are filled here; The function
+ *                     clears the contents of result weights before use
+ *      init_weights - Initialization weights; if vector in init_weights
+ *                     is empty; then weights are randomly initialized 
  * Return FLT_MAX incase of error;
  * Return 0 incase of success;
  */

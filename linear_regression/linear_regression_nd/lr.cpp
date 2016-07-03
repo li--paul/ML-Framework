@@ -123,10 +123,13 @@ float perform_linear_regression(  const lr_input &input,
         ERR_OUT(input.features[feature_iter].size() != num_features);
     }
 
+    /* Clear weights in result_weights if any */
+    result_weights.clear_weights();
+
     /* If the w in init_weights is empty !! then the user
      * did not pass any initial weights.
      */
-    if(init_weights.w.size() == 0) {
+    if(init_weights.is_empty()) {
         /* Initialize Random weights */
         result_weights.w = weights(num_features + 1).w;
     } else {
