@@ -1,16 +1,19 @@
 #title {
-    font-size:23px;
-    font-weight:bold;
-    margin:0px;
-    background:#ccc;
-    box-shadow:0px 1px 8px #000;
-    width:100%;
-    min-width: 1000px;
-    text-align:center;
+    width: 100%;
     height: 56px;
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px;
+    background: black;
+    box-shadow: 0px 1px 8px #000;
+    min-width: 1000px;
+    border-style: solid;
+    border-color: #4CAF50;
 }
 #title_text {
-    font-size:40px;
+    font-size: 40px;
+    color: #25ca5f;
     height: 56px;
     line-height: 56px;
 }
@@ -21,10 +24,30 @@
 }
 #inputs_div {
     float: right;
-    width: 25%;
+    width: 24.5%;
     height: 1000px;
-    background: black;
+    background: white;
+    border-style: solid; 
+    border-color: #4CAF50;
 }
+.fileupload_div {
+    float: left;
+    width: 75%;
+    height: 50px;
+    text-align: center;
+    background: #4CAF50;
+    overflow: hidden;
+}
+.fileupload_div input.upload {
+    float: left;
+    opacity: 0;
+    position: relative;
+    font-size: 50pt;
+    width : 50%;
+    height: 100%;
+    cursor: pointer;
+}
+
 input[type=number] {
     width: 40%;
     height: 35px;
@@ -50,4 +73,5 @@ input[type=readonly] {
     border: 2px #157638;
     border-radius: 4px;
 }
+
 
