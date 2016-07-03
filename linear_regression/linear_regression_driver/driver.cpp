@@ -153,6 +153,23 @@ int main(int argc, char *argv[]) {
 #endif
 
 #ifdef WEB_RUN
+
+    /* Dump the data that we are working on
+     * for the web_interface to read and show
+     * in plotly
+     */
+    string input_dump_filename = "./" + file_prefix + "_input_dump.txt";
+    FILE *fp_input = NULL;
+    fp_input = fopen(input_dump_filename.c_str(), "w+");
+    assert(fp_input != NULL && "Can't open file");
+    for(unsigned int f_i = 0; f_i < regression_input.features.size(); f_i++) {
+        for(unsigned int f_j = 0; f_j < regression_input.features[f_i].size(); f_j++) {
+            fprintf(fp_input, "%f, ", regression_input.features[f_i][f_j]);
+        }
+        fprintf(fp_input, "%f \n", regression_input.y[f_i]);
+    }
+    fclose(fp_input);
+
     int epoch_done = 0;
     weights result_weights;
     while(epoch_done < epoch_total) {
