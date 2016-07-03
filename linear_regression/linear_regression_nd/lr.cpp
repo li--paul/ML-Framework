@@ -6,6 +6,7 @@
 #include "./../../utils/csv_helper.hpp"
 #include <cassert>
 #include <cfloat>
+#include <cstdio>
 
 #define ERR_OUT(stmt) if(stmt) { cerr<<"Error out - "<<__FILE__<<" - "<<__LINE__<<endl;  return FLT_MAX; }
 

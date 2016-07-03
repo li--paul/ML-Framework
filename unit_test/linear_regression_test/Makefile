@@ -11,4 +11,5 @@ web-run-debug:
 clean:
 	 rm ./lr_unit_test
 	 rm ./lr_unit_test_web_run
+	 rm ./lr_dump.txt
 

@@ -9,3 +9,4 @@ web-run-debug:
 clean:
 	 rm ./lr_run
 	 rm ./lr_run_web
+	 rm ./lr_dump.txt
