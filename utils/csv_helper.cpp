@@ -10,8 +10,6 @@
 
 using namespace std;
 
-#define DEBUG
-
 /*
  * Returns the size of the file
  */
