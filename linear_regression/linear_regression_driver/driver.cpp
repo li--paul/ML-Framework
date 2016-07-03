@@ -17,12 +17,22 @@ using namespace std;
 #endif
 
 void print_help() {
+#ifdef WEB_RUN
+    string help = " The program expects 5 arguments always;                                        \n\
+                    Argument 1 : Name of the .csv file that contains data                          \n\
+                    Argument 2 : Name of the .csv file that conatins initial                       \n\
+                                 weights (Pass 0 to use random weights)                            \n\
+                    Argument 3 : Learning rate of the algorithm (pass zero to use default values)  \n\
+                    Argument 4 : Epoch (padd negative number to use default value)                 \n\
+                    Argument 5 : Dump file prefix [to uniquely identify the run]";
+#else
     string help = " The program expects 4 arguments always;                                        \n\
                     Argument 1 : Name of the .csv file that contains data                          \n\
                     Argument 2 : Name of the .csv file that conatins initial                       \n\
                                  weights (Pass 0 to use random weights)                            \n\
                     Argument 3 : Learning rate of the algorithm (pass zero to use default values)  \n\
                     Argument 4 : Epoch (padd negative number to use default value) ";
+#endif
     cout<<help<<endl;
 }
 
@@ -65,7 +75,11 @@ bool validate_inputs(lr_input &ip, weights &w) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef WEB_RUN
+    if (argc < 6) {
+#else
     if (argc < 5) {
+#endif
         print_help();
         cerr<<"Arguments not proper !"<<endl;
         return -1;
@@ -77,13 +91,19 @@ int main(int argc, char *argv[]) {
     weights_file_arg = argv[2];
     learning_rate_arg = argv[3];
     epoch_arg = argv[4];
+#ifdef WEB_RUN
+    string file_prefix = argv[5];
+#endif
 
 #ifdef DEBUG
     cout<<"Input file    - "<<input_file_arg<<endl;
     cout<<"Weights file  - "<<weights_file_arg<<endl;
     cout<<"Learning rate - "<<learning_rate_arg<<endl;
     cout<<"Epoch arg     - "<<epoch_arg<<endl;
-#endif
+#ifdef WEB_RUN
+    cout<<"File prefix   - "<<file_prefix<<endl;
+#endif // WEB_RUN
+#endif // DEBUG
 
     lr_input regression_input;
     weights regression_weights;
@@ -152,7 +172,8 @@ int main(int argc, char *argv[]) {
 
         /* Dump data */
         FILE *fp = NULL;
-        fp = fopen("./lr_dump.txt", "w+");
+        string dump_file_name = "./" + file_prefix + "_lr_dump.txt";
+        fp = fopen(dump_file_name.c_str(), "w+");
         assert(fp != NULL && "Cannot open/create file");
         for(unsigned int weight_iter = 0; weight_iter < result_weights.w.size(); weight_iter++) {
             fprintf(fp, "%f, ", result_weights.w[weight_iter]);
