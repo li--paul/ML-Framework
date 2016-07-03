@@ -8,6 +8,8 @@
 
 using namespace std;
 
+#include "./../linear_regression_nd/lr.hpp"
+
 #define DEBUG
 
 void print_help() {
@@ -151,6 +153,30 @@ bool validate_inputs(vector<vector<float> > &ip, vector<vector<float> > &w) {
     return true;
 }
 
+/*
+ * Split the csv data vector into features and expected outputs;
+ */
+void split_csv_vector(vector<vector<float> > &inputs, vector<vector<float> > &f, vector<float> &y) {
+    unsigned int num_rows = inputs.size();
+    assert(num_rows != 0);
+    unsigned int num_cols = inputs[0].size();
+    assert(num_cols != 0);
+
+    /* Fill expected outputs vector */
+    for(unsigned int row = 0; row < num_rows; row++) {
+        y.push_back(inputs[row][num_cols - 1]);
+    }
+
+    /* Fill features matrix */
+    for(unsigned int row = 0; row < num_rows; row++) {
+        vector<float> feature_vector;
+        for(unsigned int col = 0; col < num_cols - 1; col++) {
+            feature_vector.push_back(inputs[row][col]);
+        }
+        f.push_back(feature_vector);
+    }
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 5) {
         print_help();
@@ -199,6 +225,31 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
+    vector<vector<float> > features;
+    vector<float> y;
+    vector<float> w_vec; 
+
+    split_csv_vector(inputs, features, y);
+    assert(features.size() == y.size());
+    assert(features.size() != 0);
+
+    if(init_weights.size() != 0) {
+        w_vec = init_weights[0];
+        assert(w_vec.size() == features[0].size() + 1);
+    }
+
+    /* Prepare linear regression inputs */
+    lr_input regression_input;
+    weights regression_weights;
+    learning_rate = (learning_rate == 0) ? regression_input.learning_rate : learning_rate;
+    epoch = (epoch < 0) ? regression_input.epoch : epoch;
+    regression_input = lr_input(features, y, learning_rate, epoch);
+    regression_weights = weights(w_vec); 
+
+    weights result_weights;
+    
+    float ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
+    assert(ret_val == 0);
 
 #ifdef DEBUG
     cout<<"--- Inputs ---"<<endl;
