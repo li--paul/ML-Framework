@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#define DEBUG
+
 /*
  * Returns the size of the file
  */
@@ -159,6 +161,9 @@ bool validate_csv(const string file_name) {
            ) { 
             /* Valid character */
         } else {
+#ifdef DEBUG
+            cerr<<"Undesirable character  - "<<file_contents[content_iter]<<"  |  ";
+#endif
             valid = false;
             break;
         }
