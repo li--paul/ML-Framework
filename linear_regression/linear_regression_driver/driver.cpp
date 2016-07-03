@@ -11,8 +11,6 @@ using namespace std;
 #include "./../linear_regression_nd/lr.hpp"
 #include "./../linear_regression_nd/lr_utils.hpp"
 
-#define DEBUG
-
 void print_help() {
     string help = " The program expects 4 arguments always;                                        \n\
                     Argument 1 : Name of the .csv file that contains data                          \n\

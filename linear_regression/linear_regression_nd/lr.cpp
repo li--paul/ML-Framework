@@ -7,7 +7,6 @@
 #include <cassert>
 #include <cfloat>
 
-#define DEBUG
 #define ERR_OUT(stmt) if(stmt) { cerr<<"Error out - "<<__FILE__<<" - "<<__LINE__<<endl;  return FLT_MAX; }
 
 /* Define utilities first */
