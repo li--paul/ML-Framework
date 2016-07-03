@@ -82,12 +82,20 @@ int main(int argc, char *argv[]) {
     cout<<"Epoch arg     - "<<epoch_arg<<endl;
 #endif
 
-    lr_input regression_input = construct_input(input_file_arg);
+    lr_input regression_input;
     weights regression_weights;
+
+    if(construct_input(regression_input, input_file_arg) != 0) {
+        cerr<<"Input error - csv file "<<__FILE__<<" "<<__LINE__<<endl;
+        return -1;
+    }
     if(weights_file_arg == "0") {
         /* Dont care */
     } else {
-        regression_weights = construct_weights(weights_file_arg);
+        if(construct_weights(regression_weights, weights_file_arg) != 0) {
+            cerr<<"Weights error - csv file "<<__FILE__<<" "<<__LINE__<<endl;
+            return -1;
+        }
     }
     float learning_rate = (float)atof(learning_rate_arg.c_str());
     int epoch = (int)atof(epoch_arg.c_str());
