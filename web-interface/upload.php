@@ -4,8 +4,6 @@
     ini_set('upload_max_filesize', '1000M');
     ini_set('post_max_size', '1500M');
 
-    echo $_FILES['fileinput']['name'] . " ----- " . $_FILES['fileinput']['tmp_name'];
-
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["fileinput"]["name"]);
 
