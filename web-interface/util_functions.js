@@ -21,8 +21,3 @@ function selectFile() {
 function reflectChange() {
     document.getElementById('filename').value = document.getElementById('fileinput').value;
 }
-
-
-function uploadFile() {
-    return false;
-}
