@@ -4,8 +4,7 @@
         <link rel="stylesheet" type="text/css" href="ml_interface.css"> 
         <title> ML INTERFACE </title>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script>
-        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     </head>
     <body>
         <div id="title">
@@ -14,17 +13,13 @@
         <div id="plot_div"></div>
         <div id="inputs_div">
             <br> <br>
-            <form action="upload.php" method="post" enctype="multipart/form-data">
-                <div class="fileupload_div">
-                    <!--
-                    <span style="font-family: Arial; font-weight: bold; font-size: 40px;" >Choosefile</span>
-                    -->
-                    <span class="upload"> choose file </span>
-                    <input type="file" name="csv_file" class="upload">
-                </div>
-                <input type="submit" value="Upload csv" name="submit">
+            <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+                <input type='text' readonly='readonly' id='filename' name='filename' value='Click to select file' onclick="selectFile()" />
+                <input type='file' style='display: none;' id='fileinput' name='fileinput' onchange='reflectChange();' />
+                <input type='submit' value='Upload csv' name='submit' />
             </form>
         </div>
     </body>
     <script src="plot.js"></script>
+    <script src="util_functions.js"></script>
 </html>
