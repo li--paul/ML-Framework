@@ -14,9 +14,13 @@
         <div id="inputs_div">
             <br> <br>
             <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
-                <input type='text' readonly='readonly' id='filename' name='filename' value='Click to select file' onclick="selectFile()" />
-                <input type='file' style='display: none;' id='fileinput' name='fileinput' onchange='reflectChange();' />
-                <input type='submit' value='Upload CSV' id="uploadFormSubmit" name='submit' />
+                <input class='upload_form_fields' type='text' readonly='readonly' id='filename_input' name='filename_input' value='Click to select input file' onclick="selectFileInput()" />
+                <input class='upload_form_fields' type='text' readonly='readonly' id='filename_weights' name='filename_weights' value='Click to select weights file' onclick="selectFileWeights()" />
+                <input class='upload_form_fields' type='number' id='user_learning_rate' name='user_learning_rate' value='Enter learning rate' />
+                <input class='upload_form_fields' type='number' id='user_epoch' name='user_epoch' value='Enter epoch' />
+                <input type='file' style='display: none;' id='fileinput_input' name='fileinput_input' onchange='reflectChangeInput();' />
+                <input type='file' style='display: none;' id='fileinput_weights' name='fileinput_weights' onchange='reflectChangeWeights();' />
+                <input class='upload_form_fields' type='submit' value='Process' id="uploadFormSubmit" name='submit' />
             </form>
         </div>
     </body>

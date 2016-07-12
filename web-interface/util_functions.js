@@ -56,11 +56,20 @@ $("#uploadForm").submit(function(event) {
     });
 });
 
-function selectFile() {
-    var fi = document.getElementById('fileinput');
+function selectFileInput() {
+    var fi = document.getElementById('fileinput_input');
     fi.click();
 } 
 
-function reflectChange() {
-    document.getElementById('filename').value = document.getElementById('fileinput').value;
+function selectFileWeights() {
+    var fi = document.getElementById('fileinput_weights');
+    fi.click();
+} 
+
+function reflectChangeInput() {
+    document.getElementById('filename_input').value = document.getElementById('fileinput_input').value;
+}
+
+function reflectChangeWeights() {
+    document.getElementById('filename_weights').value = document.getElementById('fileinput_weights').value;
 }
