@@ -189,7 +189,7 @@ int main(int argc, char *argv[]) {
 
         /* Dump data */
         FILE *fp = NULL;
-        string dump_file_name = "./" + file_prefix + "_lr_dump.txt";
+        string dump_file_name = "./" + file_prefix + "_weights_dump.txt";
         fp = fopen(dump_file_name.c_str(), "w+");
         assert(fp != NULL && "Cannot open/create file");
         for(unsigned int weight_iter = 0; weight_iter < result_weights.w.size(); weight_iter++) {
