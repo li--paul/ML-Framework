@@ -2,23 +2,20 @@ var global_uniq_id="";
 
 function run_regression(uid) {
     // Start execution
-    var parameter_map = [];
-    parameter_map['uid'] = uid;
-    parameter_map['input_points'] = uid + ".csv";
-    parameter_map['input_weights'] = "0";
-    parameter_map['learning_rate'] = "0";
-    parameter_map['epoch'] = "-1";
-    parameter_map['prefix'] = uid;
-    parameter_map['refine'] = "yes";
+    var parameter_map = {
+                        "uid"             : uid,
+                        "learning_rate"   : "0",
+                        "epoch"           : "-1",
+                        "prefix"          : uid,
+                        "refine"          : "no" };
     $.ajax({
         url: "process_csv.php",
         type: "POST",
         data: parameter_map,
         success: function(str) {
+            alert(str); 
         }
     });
-    
-    
     
 
     // Update plot
