@@ -13,8 +13,31 @@
         return;
     } 
 
-    $input_points_path = $uid . '_input.csv';
-    $input_weights_path = $uid . '_weights.csv';
+    $farray = glob('*_input_*.csv');
+
+    if(count($farray) == 0) {
+        echo "input csv not present ! ";
+        return;
+    }
+
+    $history = -1;
+    
+    foreach ($farray as $f) {
+        $all_uscore = str_replace('.', '_', $f);
+        $fparts = explode('_', $all_uscore);
+        $this_history = intval($fparts[count($fparts) - 2]);
+        if($this_history > $history) {
+            $history = $this_history;
+        }
+    }
+
+    if($history == -1) {
+        echo "History at -1";
+        return;
+    }
+
+    $input_points_path = $uid . '_input_' . $history . '.csv';
+    $input_weights_path = $uid . '_weights_' . $history . '.csv';
     $learning_rate = $_POST['learning_rate'];
     $epoch = $_POST['epoch'];
     $output_prefix = $uid;
