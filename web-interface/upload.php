@@ -32,8 +32,13 @@
             return "1";
         }
 
-        $target_input_file_location = $result_dir . '/' . $uid . '_input.csv';
-        $target_weights_file_location = $result_dir . '/' . $uid . '_weights.csv';
+        /* The 0 in the file name denotes that this 
+         * is the initial input and weights file;
+         * 'Refine' button will create new input and
+         * weights file
+         */ 
+        $target_input_file_location = $result_dir . '/' . $uid . '_input_0.csv';
+        $target_weights_file_location = $result_dir . '/' . $uid . '_weights_0.csv';
 
         /* Copy the uploaded file to result store dir for processing */
         if(!copy($input_filepath, $target_input_file_location)) {
