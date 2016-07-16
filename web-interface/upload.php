@@ -25,7 +25,7 @@
      * Return error code "2" if unable to copy input file.
      * Return error code "3" if unable to copy weights file.
      */ 
-    function setup_execution_directory($uniq_id, $input_filepath, $weights_filepath) {
+    function setup_execution_directory($uid, $input_filepath, $weights_filepath) {
         $result_dir = 'Results/' . $uid . '_run/';
         /* Create results directory */
         if(!mkdir($result_dir, 0777)) {
