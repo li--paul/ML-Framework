@@ -49,5 +49,8 @@
 
     shell_exec( 'tsp ' . $lr_exec . ' ' . $input_points_path . ' ' . $input_weights_path . ' ' . $learning_rate . ' ' . $epoch . ' ' . $output_prefix);
 
+    /* Post process once done */
+    shell_exec( 'tsp ' . 'php ./../../post_process.php ' . $uid);
+
     echo "0";
 ?>
