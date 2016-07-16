@@ -52,6 +52,10 @@ $("#uploadForm").submit(function(event) {
     if(!validate_csv(weights_filename)) {
         /* Random weights */
         weights_filename = 0;
+        /* Reflect the same in fileinput weights
+         * to avoid unnecessary upload
+         */
+        document.getElementById('fileinput_weights').value = "";
     }
 
     if(isNaN(learning_rate) || learning_rate < 0) {
@@ -64,9 +68,7 @@ $("#uploadForm").submit(function(event) {
         epoch = -1;
     }
 
-    alert(" Input file          - " + input_filename  + "\n" + " Input weights file  -" + weights_filename + "\n" + " Learning rate       -" + learning_rate.toString() + "\n" + " Epch                -" + epoch.toString() + "\n");
-
-    return;
+    alert("Process arguments : " + "\n" + " Input file          - " + input_filename  + "\n" + " Input weights file  -" + weights_filename + "\n" + " Learning rate       -" + learning_rate.toString() + "\n" + " Epch                -" + epoch.toString() + "\n");
 
     // Get unique id
     $.ajax({
@@ -78,6 +80,7 @@ $("#uploadForm").submit(function(event) {
 
             var fd = new FormData(document.getElementById('uploadForm'));
             fd.append("uniq_id", uniq_id);
+            fd.append("validated_weights_filename", weights_filename);
             $.ajax({
                 url: "upload.php",
                 type: "POST",
@@ -85,14 +88,14 @@ $("#uploadForm").submit(function(event) {
                 contentType: false,
                 processData: false,
                 success: function(str) {
-                    if(str.localeCompare("Upload success.") == 0) {
+                    if(str.localeCompare("000") == 0) {
                         alert("Upload success... Processing");
     
                         // Run regression
-                        run_regression(uniq_id);
+                        //run_regression(uniq_id);
 
                     } else {
-                        alert(str + "... Aborting");
+                        alert(str + "... Aborting" );
                     }
                 }
             });
