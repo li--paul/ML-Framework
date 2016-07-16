@@ -1,7 +1,10 @@
 <?php
     /* Defines php functions widely used */
 
-    /* Should be called from */
+    /*
+     * Search for files of the given pattern,
+     * extract the history and return the latest
+     */
     function get_latest_history($pattern) {
         $farray = glob($pattern);
 
@@ -28,4 +31,29 @@
 
         return $history;
     }
+
+    /*
+     * Get the dimensions of the given csv file
+     */
+    function get_dimension($file) {
+        $f = fopen($file, 'r');
+        if($f == false) {
+            echo "Cannot open file";
+            return -1;
+        }
+        $line = fgets($f);
+        fclose($f);
+
+        $dim = 0;
+
+        $line_parts = explode(',', $line);
+        foreach ($line_parts as $lp) {
+            if($lp != "") {
+                $dim++;
+            }
+        }
+
+        return $dim;
+    }
+
 ?>
