@@ -4,6 +4,8 @@
      * PHP file returns '0' on success.
      */
 
+    include 'php_utils.php';
+
     $lr_exec ='/home/varun/programming/ML/linear_regression/linear_regression_driver/lr_run_web';
 
     $uid = $_POST['uid'];
@@ -13,24 +15,7 @@
         return;
     } 
 
-    $farray = glob('*_input_*.csv');
-
-    if(count($farray) == 0) {
-        echo "input csv not present ! ";
-        return;
-    }
-
-    $history = -1;
-    
-    foreach ($farray as $f) {
-        $all_uscore = str_replace('.', '_', $f);
-        $fparts = explode('_', $all_uscore);
-        $this_history = intval($fparts[count($fparts) - 2]);
-        if($this_history > $history) {
-            $history = $this_history;
-        }
-    }
-
+    $history = get_latest_history('*_input_*.csv');
     if($history == -1) {
         echo "History at -1";
         return;

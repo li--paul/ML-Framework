@@ -1,24 +1,11 @@
 <?php
+
+    include 'php_utils.php';
+
     $uid = $argv[1];
 
-    $farray = glob('*_input_*.csv');
-    
-    if(count($farray) == 0) {
-        echo "No input csv files";
-        return;
-    }
-
     /* Get previous history */
-    $history = -1;
-    foreach ($farray as $f) {
-        $all_uscore = str_replace('.', '_', $f);
-        $fparts = explode('_', $all_uscore);
-        $this_history = intval($fparts[count($fparts) - 2]);
-        if($this_history > $history) {
-            $history = $this_history;
-        }
-    }
-
+    $history = get_latest_history('*_input_*.csv');
     if($history == -1) {
         echo "No history";
         return;
