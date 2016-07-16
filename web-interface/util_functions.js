@@ -51,7 +51,7 @@ $("#uploadForm").submit(function(event) {
 
     if(!validate_csv(weights_filename)) {
         /* Random weights */
-        weights_filename = 0;
+        weights_filename = "0";
         /* Reflect the same in fileinput weights
          * to avoid unnecessary upload
          */
@@ -90,9 +90,24 @@ $("#uploadForm").submit(function(event) {
                 success: function(str) {
                     if(str.localeCompare("000") == 0) {
                         alert("Upload success... Processing");
-    
-                        // Run regression
-                        //run_regression(uniq_id);
+
+                        /* Another leven of ajax :D */
+                        var parameter_map = {
+                                                "uid"             : uniq_id,
+                                                "learning_rate"   : learning_rate,
+                                                "epoch"           : epoch,
+                                            };
+                        $.ajax({
+                            url: "process_csv.php",
+                            type: "POST",
+                            data: parameter_map,
+                            success: function(str) {
+                                if(str.localeCompare("0") == 0) {
+                                    /* Move to the results page */
+                                    window.location = 'result_refine.php?' + 'uid=' + uniq_id + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
+                                }
+                            }
+                        });
 
                     } else {
                         alert(str + "... Aborting" );
