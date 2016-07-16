@@ -21,8 +21,52 @@ function run_regression(uid) {
     // Update plot
 }
 
+/*
+ * Return true if file is a valid csv,
+ * Return false if file is invalid csv.
+ */
+function validate_csv(filename) {
+    var file_parts = filename.split(".");
+    var extn = file_parts[file_parts.length - 1];
+    if(extn.localeCompare("csv") == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 $("#uploadForm").submit(function(event) {
     event.preventDefault();
+
+    var input_filename = document.getElementById('filename_input').value;
+    var weights_filename = document.getElementById('filename_weights').value;
+    var learning_rate = parseFloat(document.getElementById('user_learning_rate').value);
+    var epoch = parseFloat(document.getElementById('user_epoch').value);
+
+    // Validation
+    if(!validate_csv(input_filename)) {
+        alert('Invalid input filename')
+        return;
+    } 
+
+    if(!validate_csv(weights_filename)) {
+        /* Random weights */
+        weights_filename = 0;
+    }
+
+    if(isNaN(learning_rate) || learning_rate < 0) {
+        /* Use default learning rate */
+        learning_rate = 0;
+    }
+
+    if(isNaN(epoch) || epoch <= 0) {
+        /* Using default value */
+        epoch = -1;
+    }
+
+    alert(" Input file          - " + input_filename  + "\n" + " Input weights file  -" + weights_filename + "\n" + " Learning rate       -" + learning_rate.toString() + "\n" + " Epch                -" + epoch.toString() + "\n");
+
+    return;
 
     // Get unique id
     $.ajax({
@@ -67,9 +111,19 @@ function selectFileWeights() {
 } 
 
 function reflectChangeInput() {
-    document.getElementById('filename_input').value = document.getElementById('fileinput_input').value;
+    var fileinput_input_element = document.getElementById('fileinput_input');
+    if(fileinput_input_element.value.localeCompare("") == 0) {
+        document.getElementById('filename_input').value = "Click to select input file"; 
+    } else {
+        document.getElementById('filename_input').value = fileinput_input_element.value; 
+    }
 }
 
 function reflectChangeWeights() {
-    document.getElementById('filename_weights').value = document.getElementById('fileinput_weights').value;
+    var fileinput_weights_element = document.getElementById('fileinput_weights');
+    if(fileinput_weights_element.value.localeCompare("") == 0) {
+        document.getElementById('filename_weights').value = "Click to select weights file";
+    } else {
+        document.getElementById('filename_weights').value = fileinput_weights_element.value;
+    }
 }
