@@ -4,6 +4,48 @@ var history = '<?php $_GET["history"] ?>';
 var check_for_dumps_interval;
 var update_plot_interval;
 
+function update_plot(input_path, weights_path) {
+    var parameter_map_input = { 'fpath'   : input_path };
+    var parameter_map_weights = { 'fpath' : weights_path };
+
+    var input_points = "";
+    var weights = "";
+    var cost = "";
+
+    /* Get input points */
+    $.ajax({
+        url: "get_file_contents.php",
+        type: "POST",
+        data: parameter_map_input,
+        success: function(str) {
+            if(str.localeCompare("-1") == 0) {
+                alert("get_input_points fail");
+                return;
+            } else {
+                input_points = str;
+                /* Get weights */
+                $.ajax({
+                    url: "get_file_contents.php",
+                    type: "POST",
+                    data: parameter_map_weights,
+                    success: function(str) {
+                        if(str.localeCompare("-1") == 0) {
+                            alert("get weights fail");
+                            return;
+                        } else {
+                            var str_parts = str.split(" - ");
+                            weights = str_parts[0];
+                            cost = str_parts[1];
+
+                            draw_plot(input_points, weights, cost);
+                        }
+                    }
+                });
+            }
+        }
+    });
+}
+
 function check_for_dumps() {
     /* If the dump files are generated;
      * then we are ready to read the dumps
