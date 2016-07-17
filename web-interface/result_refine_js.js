@@ -6,6 +6,15 @@ function draw_plot(data, weights, cost) {
     var lines = data.split("\n");
     var x_pts = [];
     var y_pts = [];
+    var line_x_pts = [];
+    var line_y_pts = [];
+
+    var plot_extent_max_x = Number.MIN_VALUE;
+    var plot_extent_max_y = Number.MIN_VALUE;
+    var plot_extent_min_x = Number.MAX_VALUE;
+    var plot_extent_min_y = Number.MAX_VALUE;
+
+    /* Get data points */
     for(var line_iter = 0; line_iter < lines.length; line_iter++) {
         if (lines[line_iter].localeCompare("") == 0) {
             continue;
@@ -24,8 +33,35 @@ function draw_plot(data, weights, cost) {
             return;
         }
 
+        plot_extent_max_x = Math.max(plot_extent_max_x, parseFloat(cleaned_words[0]));
+        plot_extent_max_y = Math.max(plot_extent_max_y, parseFloat(cleaned_words[1]));
+        plot_extent_min_x = Math.min(plot_extent_min_x, parseFloat(cleaned_words[0]));
+        plot_extent_min_y = Math.min(plot_extent_min_y, parseFloat(cleaned_words[1]));
+
         x_pts.push(cleaned_words[0]);
         y_pts.push(cleaned_words[1]);
+    }
+
+    /* Get weights to draw weights-line */
+    if(weights.localeCompare("") != 0) {
+        weights_parts = weights.split(",");
+        clean_weights = [];
+        for(var wt_iter = 0; wt_iter < weights_parts.length; wt_iter++) {
+            if(weights_parts[wt_iter].localeCompare("") != 0) {
+                clean_weights.push(parseFloat(weights_parts[wt_iter]));
+            } 
+        }
+
+        if(clean_weights.length != 2) {
+            alert("Weights dont describe a line !");
+            return;
+        }
+
+        /* Calculate 2 points at plot extents */ 
+        line_x_pts.push(plot_extent_max_x);
+        line_x_pts.push(plot_extent_min_x);
+        line_y_pts.push(plot_extent_max_x * clean_weights[0] + clean_weights[1]);
+        line_y_pts.push(plot_extent_min_x * clean_weights[0] + clean_weights[1]);
     }
 
     var scatter_data =  {
@@ -35,8 +71,19 @@ function draw_plot(data, weights, cost) {
                             mode: 'markers'
                         };
 
-
     var data = [scatter_data];
+
+    var line_data;
+    if(weights.localeCompare("") != 0) {
+        /* If we have valid weights; add to plot */
+        line_data = {
+                        x: line_x_pts,
+                        y: line_y_pts,
+                        mode: 'lines'
+                    };
+        data.push(line_data);
+    }
+
     var layout = {  
                     title: 'scatter-plot',
                     xaxis: {
