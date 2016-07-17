@@ -4,6 +4,8 @@
      * Returns 1 if the driver has not yet started dumping output.
      * Returns 2 if the driver has finished running.
      */ 
+
+    include 'php_utils.php';
     
     $history = intval($_POST['history']);
     $uid = $_POST['uid'];
