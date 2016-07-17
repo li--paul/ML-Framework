@@ -34,8 +34,8 @@
         var uid = '<?php echo $_GET["uid"] ?>';
         var h = '<?php echo $_GET["history"] ?>';
         var dims = '<?php echo $input_dim ?>';
-        var lr = '<?php echo $_GET["learning_rate"] ?>';
-        var e = '<?php echo $_GET["epoch"] ?>';
+        var learning_rate = '<?php echo $_GET["learning_rate"] ?>';
+        var epoch = '<?php echo $_GET["epoch"] ?>';
     </script>
     <script src="result_refine_js.js"></script>
 </html>

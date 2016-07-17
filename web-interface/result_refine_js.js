@@ -199,7 +199,7 @@ function check_for_dumps() {
             if(str.localeCompare("2") == 0) {
                 /* Move to the results page */
                 var history_val = parseInt(h);
-                window.location = 'result_refine.php?' + 'uid=' + uid + '&history=' + (history_val + 1).toString() + '&lr=' + lr.toString() + '&epoch=' + e.toString();
+                window.location = 'result_refine.php?' + 'uid=' + uid + '&history=' + (history_val + 1).toString() + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
             } else if(str.localeCompare("0") == 0){
                 if(dims == 2) {
                     update_plot('./Results/' + uid + '_run/' + uid + '_input_dump.csv',
@@ -229,23 +229,23 @@ $(document).ready(
 $("#refineForm").submit(function(event) {
     event.preventDefault();
 
-    var learning_rate = parseFloat(document.getElementById('user_learning_rate').value);
-    var epoch = parseFloat(document.getElementById('user_epoch').value);
+    var user_learning_rate = parseFloat(document.getElementById('user_learning_rate').value);
+    var user_epoch = parseFloat(document.getElementById('user_epoch').value);
 
-    if(isNaN(learning_rate) || learning_rate < 0) {
+    if(isNaN(user_learning_rate) || user_learning_rate < 0) {
         /* Use default learning rate */
-        learning_rate = 0;
+        user_learning_rate = 0;
     }
 
-    if(isNaN(epoch) || epoch <= 0) {
+    if(isNaN(user_epoch) || user_epoch <= 0) {
         /* Using default value */
-        epoch = -1;
+        user_epoch = -1;
     }
 
     var parameter_map = {
                         "uid"             : uid,
-                        "learning_rate"   : learning_rate,
-                        "epoch"           : epoch
+                        "learning_rate"   : user_learning_rate,
+                        "epoch"           : user_epoch
                         };
 
     var history_val = parseInt(h);
@@ -256,7 +256,7 @@ $("#refineForm").submit(function(event) {
         success: function(str) {
             if(str.localeCompare("0") == 0) {
                 /* Move to the results page */
-                window.location = 'result_refine.php?' + 'uid=' + uid + '&history=' + (history_val + 1).toString() + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
+                window.location = 'result_refine.php?' + 'uid=' + uid + '&history=' + (history_val + 1).toString() + '&lr=' + user_learning_rate.toString() + '&epoch=' + user_epoch.toString();
             } else {
                 alert(str + '... Aborting');
             }
