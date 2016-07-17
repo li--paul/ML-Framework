@@ -1,5 +1,6 @@
 
 var check_for_dumps_interval;
+var line_data;
 
 /*
  * Plots the data points.
@@ -68,10 +69,10 @@ function draw_plot(data, weights, cost) {
         }
 
         /* Extend the plot extent; looks ugly without extending */
-        plot_extent_max_x += 100;
-        plot_extent_max_y += 100;
-        plot_extent_min_x -= 100;
-        plot_extent_min_y -= 100;
+        plot_extent_max_x += 5;
+        plot_extent_max_y += 5;
+        plot_extent_min_x -= 5;
+        plot_extent_min_y -= 5;
 
         /* Calculate 2 points at plot extents */ 
         line_x_pts.push(plot_extent_max_x);
@@ -86,19 +87,17 @@ function draw_plot(data, weights, cost) {
                             type: 'scatter',
                             mode: 'markers'
                         };
-
-    var data = [scatter_data];
-
-    var line_data;
     if(weights.localeCompare("") != 0) {
         /* If we have valid weights; add to plot */
         line_data = {
                         x: line_x_pts,
                         y: line_y_pts,
-                        mode: 'lines'
+                        mode: 'lines+markers'
                     };
-        data.push(line_data);
     }
+
+    var data = [scatter_data];
+    data.push(line_data);
 
     var layout = {  
                     title: 'scatter-plot',
@@ -222,7 +221,7 @@ $(document).ready(
             document.getElementById('plot_div').innerHTML = '<img src="./cant_draw.png" />';
         }
         display_weights('./Results/' + uid + '_run/' + uid + '_weights_' + h + '.csv');
-        check_for_dumps_interval = setInterval(check_for_dumps, 1500);
+        check_for_dumps_interval = setInterval(check_for_dumps, 250);
     }
 );
 
