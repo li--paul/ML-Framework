@@ -57,6 +57,12 @@ function draw_plot(data, weights, cost) {
             return;
         }
 
+        /* Extend the plot extent; looks ugly without extending */
+        plot_extent_max_x += 100;
+        plot_extent_max_y += 100;
+        plot_extent_min_x -= 100;
+        plot_extent_min_y -= 100;
+
         /* Calculate 2 points at plot extents */ 
         line_x_pts.push(plot_extent_max_x);
         line_x_pts.push(plot_extent_min_x);
