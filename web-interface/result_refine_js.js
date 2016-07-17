@@ -190,6 +190,8 @@ function check_for_dumps() {
                             "history" : h,
                             "uid"     : uid
                         };
+
+    var history_val = parseInt(h);
     $.ajax({
         url: "dump_file_status.php",
         type: "POST",
@@ -198,8 +200,14 @@ function check_for_dumps() {
             if(str.localeCompare("2") == 0) {
                 /* Move to the results page */
                 var history_val = parseInt(h);
-                window.location = 'result_refine.php?' + 'uid=' + uid + '&history=' + (history_val + 1).toString() + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
-            } else if(str.localeCompare("0") == 0){
+                if(dims == 2) {
+                    update_plot('./Results/' + uid + '_run/' + uid + '_input_' + (history_val + 1).toString() +  '.csv',
+                                './Results/' + uid + '_run/' + uid + '_weights_' + (history_val + 1).toString() + '.csv');
+                }
+                /* Display weights */
+                display_weights('./Results/' + uid + '_run/' + uid + '_weights_' + (history_val + 1).toString() + '.csv');
+                clearInterval(check_for_dumps_interval);
+            } else if(str.localeCompare("0") == 0) {
                 if(dims == 2) {
                     update_plot('./Results/' + uid + '_run/' + uid + '_input_dump.csv',
                                 './Results/' + uid + '_run/' + uid + '_weights_dump.csv');
