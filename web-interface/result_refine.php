@@ -30,6 +30,10 @@
             </div>
         </div>
     </body>
-    <script src="util_functions.js"></script>
-    <script src="plot.js"></script>
+    <script>
+        var uid = '<?php echo $_GET["uid"] ?>';
+        var h = '<?php echo $_GET["history"] ?>';
+        var dims = '<?php echo $input_dim ?>';
+    </script>
+    <script src="result_refine_js.js"></script>
 </html>
