@@ -195,7 +195,6 @@ int main(int argc, char *argv[]) {
         for(unsigned int weight_iter = 0; weight_iter < result_weights.w.size(); weight_iter++) {
             fprintf(fp, "%f, ", result_weights.w[weight_iter]);
         }
-        fprintf(fp, " - %f \n", cost_function(regression_input.features, regression_input.y, result_weights.w));
         fclose(fp);
 
         /* Initialize next run's weights */
