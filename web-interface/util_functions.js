@@ -104,7 +104,7 @@ $("#uploadForm").submit(function(event) {
                             success: function(str) {
                                 if(str.localeCompare("0") == 0) {
                                     /* Move to the results page */
-                                    window.location = 'result_refine.php?' + 'uid=' + uniq_id + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
+                                    window.location = 'result_refine.php?' + 'uid=' + uniq_id + '&history=0' + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
                                 } else {
                                     alert(str + '... Aborting');
                                 }
