@@ -1,7 +1,15 @@
 
 var check_for_dumps_interval;
-var update_plot_interval;
 
+/*
+ * Plots the data points.
+ * Arguments : 
+ *  data - Path to the data points csv file.
+ *  weights - Path to the weights csv file. ( if
+ *            the weights csv file is not available
+ *            dont panic. Dont plot it)
+ *  cost - Cost associated with the weights.
+ */
 function draw_plot(data, weights, cost) {
     var lines = data.split("\n");
     var x_pts = [];
@@ -23,8 +31,9 @@ function draw_plot(data, weights, cost) {
         var cleaned_words = [];
         for(var word_iter = 0; word_iter < words.length; word_iter++) {
             var word = words[word_iter];
-            if(word.localeCompare("") != 0){
-                cleaned_words.push(word);
+            var float_word = parseFloat(word);
+            if(!isNaN(float_word)){
+                cleaned_words.push(float_word);
             } 
         }
 
@@ -33,10 +42,10 @@ function draw_plot(data, weights, cost) {
             return;
         }
 
-        plot_extent_max_x = Math.max(plot_extent_max_x, parseFloat(cleaned_words[0]));
-        plot_extent_max_y = Math.max(plot_extent_max_y, parseFloat(cleaned_words[1]));
-        plot_extent_min_x = Math.min(plot_extent_min_x, parseFloat(cleaned_words[0]));
-        plot_extent_min_y = Math.min(plot_extent_min_y, parseFloat(cleaned_words[1]));
+        plot_extent_max_x = Math.max(plot_extent_max_x, cleaned_words[0]);
+        plot_extent_max_y = Math.max(plot_extent_max_y, cleaned_words[1]);
+        plot_extent_min_x = Math.min(plot_extent_min_x, cleaned_words[0]);
+        plot_extent_min_y = Math.min(plot_extent_min_y, cleaned_words[1]);
 
         x_pts.push(cleaned_words[0]);
         y_pts.push(cleaned_words[1]);
@@ -47,13 +56,14 @@ function draw_plot(data, weights, cost) {
         weights_parts = weights.split(",");
         clean_weights = [];
         for(var wt_iter = 0; wt_iter < weights_parts.length; wt_iter++) {
-            if(weights_parts[wt_iter].localeCompare("") != 0) {
-                clean_weights.push(parseFloat(weights_parts[wt_iter]));
+            var float_wt = parseFloat(weights_parts[wt_iter]);
+            if(!isNaN(float_wt)) {
+                clean_weights.push(float_wt);
             } 
         }
 
         if(clean_weights.length != 2) {
-            alert("Weights dont describe a line !");
+            alert("Weights dont describe a line ! ");
             return;
         }
 
@@ -105,6 +115,12 @@ function draw_plot(data, weights, cost) {
     Plotly.newPlot(plot_div, data, layout);
 }
 
+/*
+ * Update the plot from data in input_path and weights_path.
+ * If something goes wrong with the input points panic
+ * and return; If something goes wrong with the weights
+ * dont panic; Just dont update it
+ */
 function update_plot(input_path, weights_path) {
     var parameter_map_input = { 'fpath'   : input_path };
     var parameter_map_weights = { 'fpath' : weights_path };
@@ -146,6 +162,27 @@ function update_plot(input_path, weights_path) {
     });
 }
 
+/*
+ * Print the weights in weights_path file
+ * to the weights_output txt box.
+ */
+function display_weights(weights_path) {
+    var parameter_map_weights = { 'fpath' : weights_path };
+    $.ajax({
+        url: "get_file_contents.php",
+        type: "POST",
+        data: parameter_map_weights,
+        success: function(str) {
+            if(str.localeCompare("-1") != 0) {
+                var str_parts = str.split(" - ");
+                weights = str_parts[0];
+                cost = str_parts[1];
+                document.getElementById('weights_output').value = weights;
+            }
+        }
+    });
+}
+
 function check_for_dumps() {
     /* If the dump files are generated;
      * then we are ready to read the dumps
@@ -162,10 +199,14 @@ function check_for_dumps() {
             if(str.localeCompare("2") == 0) {
                 /* Move to the results page */
                 var history_val = parseInt(h);
-                window.location = 'result_refine.php?' + 'uid=' + uniq_id + '&history=' + (history_val + 1).toString() + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
-            } else if(str.localeCompare("0")){
-                clearInterval(check_for_dumps);
-                update_plot_interval = setInterval(update_plot, 1500);
+                window.location = 'result_refine.php?' + 'uid=' + uid + '&history=' + (history_val + 1).toString() + '&lr=' + lr.toString() + '&epoch=' + e.toString();
+            } else if(str.localeCompare("0") == 0){
+                if(dims == 2) {
+                    update_plot('./Results/' + uid + '_run/' + uid + '_input_dump.csv',
+                                './Results/' + uid + '_run/' + uid + '_weights_dump.csv');
+                }
+                /* Display weights */
+                display_weights('./Results/' + uid + '_run/' + uid + '_weights_dump.csv');
             }
         }
     });
@@ -180,8 +221,8 @@ $(document).ready(
         } else {
             document.getElementById('plot_div').innerHTML = '<img src="./cant_draw.png" />';
         }
-        return;
-        //check_for_dumps_interval = setInterval(check_for_dumps, 1500);
+        display_weights('./Results/' + uid + '_run/' + uid + '_weights_' + h + '.csv');
+        check_for_dumps_interval = setInterval(check_for_dumps, 1500);
     }
 );
 
@@ -215,7 +256,7 @@ $("#refineForm").submit(function(event) {
         success: function(str) {
             if(str.localeCompare("0") == 0) {
                 /* Move to the results page */
-                window.location = 'result_refine.php?' + 'uid=' + uniq_id + '&history=' + (history_val + 1).toString() + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
+                window.location = 'result_refine.php?' + 'uid=' + uid + '&history=' + (history_val + 1).toString() + '&lr=' + learning_rate.toString() + '&epoch=' + epoch.toString();
             } else {
                 alert(str + '... Aborting');
             }
