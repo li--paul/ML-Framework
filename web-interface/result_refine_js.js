@@ -177,6 +177,8 @@ $(document).ready(
         if(dims == 2) {
             update_plot('./Results/' + uid + '_run/' + uid + '_input_' + h + '.csv',
                         './Results/' + uid + '_run/' + uid + '_weights_' + h + '.csv');
+        } else {
+            document.getElementById('plot_div').innerHTML = '<img src="./cant_draw.png" />';
         }
         return;
         //check_for_dumps_interval = setInterval(check_for_dumps, 1500);
