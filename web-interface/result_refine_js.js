@@ -1,6 +1,11 @@
 
 var check_for_dumps_interval;
-var line_data;
+/* Default line */
+var line_data = {
+                x: [0],
+                y: [0],
+                mode: 'lines+markers'
+            };
 
 /*
  * Plots the data points.
@@ -12,6 +17,7 @@ var line_data;
  *  cost - Cost associated with the weights.
  */
 function draw_plot(data, weights, cost) {
+
     var lines = data.split("\n");
     var x_pts = [];
     var y_pts = [];
