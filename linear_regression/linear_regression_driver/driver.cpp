@@ -193,7 +193,11 @@ int main(int argc, char *argv[]) {
         fp = fopen(dump_file_name.c_str(), "w+");
         assert(fp != NULL && "Cannot open/create file");
         for(unsigned int weight_iter = 0; weight_iter < result_weights.w.size(); weight_iter++) {
-            fprintf(fp, "%f, ", result_weights.w[weight_iter]);
+            if(weight_iter == 0) {
+                fprintf(fp, "%f", result_weights.w[weight_iter]);
+            } else {
+                fprintf(fp, ", %f", result_weights.w[weight_iter]);
+            }
         }
         fclose(fp);
 
