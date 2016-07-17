@@ -145,13 +145,8 @@ function update_plot(input_path, weights_path) {
                     type: "POST",
                     data: parameter_map_weights,
                     success: function(str) {
-                        if(str.localeCompare("-1") == 0) {
-                            weights = "";
-                            cost = "";
-                        } else {
-                            var str_parts = str.split(" - ");
-                            weights = str_parts[0];
-                            cost = str_parts[1];
+                        if(str.localeCompare("-1") != 0) {
+                            weights = str;
                         }
                         draw_plot(input_points, weights, cost);
                     }
@@ -173,10 +168,7 @@ function display_weights(weights_path) {
         data: parameter_map_weights,
         success: function(str) {
             if(str.localeCompare("-1") != 0) {
-                var str_parts = str.split(" - ");
-                weights = str_parts[0];
-                cost = str_parts[1];
-                document.getElementById('weights_output').value = weights;
+                document.getElementById('weights_output').value = str;
             }
         }
     });
