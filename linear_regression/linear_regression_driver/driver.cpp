@@ -216,6 +216,7 @@ int main(int argc, char *argv[]) {
             // Randomly restart one of the weights
             result_weights.w[(rand() % result_weights.w.size())] = rand() % 100;
         }
+        last_cost = current_cost;
 #endif
 
         /* Initialize next run's weights */
