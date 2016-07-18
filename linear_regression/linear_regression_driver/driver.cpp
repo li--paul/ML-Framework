@@ -14,7 +14,11 @@ using namespace std;
 #ifdef WEB_RUN
 // Dump data every 50th epoch
 #define DUMP_FREQUENCY 50
-#endif
+// If the cost does not seem to lessen
+// random init one of the weights as 
+// a kick start
+#define NUDGE_WEIGHTS
+#endif // WEB_RUN
 
 void print_help() {
 #ifdef WEB_RUN
@@ -170,6 +174,10 @@ int main(int argc, char *argv[]) {
     }
     fclose(fp_input);
 
+#ifdef NUDGE_WEIGHTS
+    float last_cost = 0; 
+#endif
+
     int epoch_done = 0;
     weights result_weights;
     while(epoch_done < epoch_total) {
@@ -200,6 +208,15 @@ int main(int argc, char *argv[]) {
             }
         }
         fclose(fp);
+
+#ifdef NUDGE_WEIGHTS
+        float current_cost = cost_function(regression_input.features, regression_input.y, result_weights.w);
+        if(last_cost == current_cost) {
+            srand(time(NULL));
+            // Randomly restart one of the weights
+            result_weights.w[(rand() % result_weights.w.size())] = rand() % 100;
+        }
+#endif
 
         /* Initialize next run's weights */
         regression_weights = result_weights;
