@@ -204,6 +204,12 @@ function check_for_dumps() {
                 }
                 /* Display weights */
                 display_weights('./Results/' + uid + '_run/' + uid + '_weights_' + (history_val + 1).toString() + '.csv');
+
+                /* Display refine form fields */
+                document.getElementById('user_learning_rate').style.display = 'block';
+                document.getElementById('user_epoch').style.display = 'block';
+                document.getElementById('uploadFormSubmit').style.display = 'block';
+
                 clearInterval(check_for_dumps_interval);
             } else if(str.localeCompare("0") == 0) {
                 if(dims == 2) {
@@ -220,6 +226,11 @@ function check_for_dumps() {
 
 $(document).ready(
     function process_kickoff() {
+        /* Hide refine form fields; Show when processing done */
+        document.getElementById('user_learning_rate').style.display = 'none';
+        document.getElementById('user_epoch').style.display = 'none';
+        document.getElementById('uploadFormSubmit').style.display = 'none';
+
         if(dims == 2) {
             update_plot('./Results/' + uid + '_run/' + uid + '_input_' + h + '.csv',
                         './Results/' + uid + '_run/' + uid + '_weights_' + h + '.csv');
