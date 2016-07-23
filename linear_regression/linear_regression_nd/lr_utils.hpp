@@ -10,6 +10,7 @@
 using namespace std;
 
 /*
+ * TODO : Make the return value -1
  * Given features and weights, evaluate the hypothesis function.
  * Return DBL_MAX in case of error.
  * Any other value is considered success (hypothesis result).
