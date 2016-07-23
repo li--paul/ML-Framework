@@ -5,6 +5,7 @@
 #include <cfloat>
 #include <ctime>
 #include <cstdlib>
+#include <cstdio>
 using namespace std;
 
 #include "../../linear_regression/linear_regression_nd/lr.hpp"
@@ -213,6 +214,28 @@ bool cost_function_weight_slope_test() {
 }
 
 /*
+ * Utility used in lr_core to test
+ * perform_linear_regression with csv file input
+ * Return true if test passed.
+ * Return false if test failed.
+ */
+bool lr_core_csv_tests(string fname) {
+    lr_input regression_input;
+    weights regression_weights;
+    weights result_weights;
+    ERR_OUT(construct_input(regression_input, fname) != 0);
+
+    /* Enough epochs to converge */
+    regression_input.epoch = 5000000;
+
+    double ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
+    assert(ret_val == 0);
+
+    ERR_OUT(cost_function(regression_input.features, regression_input.y, result_weights.w) > (double)0.1);
+    return true;
+}
+
+/*
  * Test perform_linear_regression()
  * Return true if all tests passed.
  * Return false if atleast one test failed.
@@ -258,10 +281,54 @@ bool lr_core_test() {
     double cost_before = cost_function(f, y, w);
     double cost_after = cost_function(f, y, rw.w);
     ERR_OUT(cost_after >= cost_before);
-
     ERR_OUT(perform_linear_regression(ip, rw, iw) != 0);
     ERR_OUT(rw.w.size() != f[0].size() + 1);
 
+    /* Test with various csv files */
+    /* Takes a very long time - Print updates */
+    ERR_OUT(lr_core_csv_tests("./test_45.csv") == false);
+    fprintf(stderr, "Update -    test_45.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_45_up.csv") == false);
+    fprintf(stderr, "Update -    test_45_up.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_45_down.csv") == false);
+    fprintf(stderr, "Update -    test_45_down.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_45_right.csv") == false);
+    fprintf(stderr, "Update -    test_45_right.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_45_left.csv") == false);
+    fprintf(stderr, "Update -    test_45_left.csv complete ...");
+
+    ERR_OUT(lr_core_csv_tests("./test_135.csv") == false);
+    fprintf(stderr, "Update -    test_135.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_135_up.csv") == false);
+    fprintf(stderr, "Update -    test_135_up.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_135_down.csv") == false);
+    fprintf(stderr, "Update -    test_135_down.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_135_right.csv") == false);
+    fprintf(stderr, "Update -    test_135_right.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_135_left.csv") == false);
+    fprintf(stderr, "Update -    test_135_left.csv complete ...");
+
+    ERR_OUT(lr_core_csv_tests("./test_225.csv") == false);
+    fprintf(stderr, "Update -    test_225.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_225_up.csv") == false);
+    fprintf(stderr, "Update -    test_225_up.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_225_down.csv") == false);
+    fprintf(stderr, "Update -    test_225_down.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_225_right.csv") == false);
+    fprintf(stderr, "Update -    test_225_right.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_225_left.csv") == false);
+    fprintf(stderr, "Update -    test_225_left.csv complete ...");
+
+    ERR_OUT(lr_core_csv_tests("./test_315.csv") == false);
+    fprintf(stderr, "Update -    test_315.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_315_up.csv") == false);
+    fprintf(stderr, "Update -    test_315_up.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_315_down.csv") == false);
+    fprintf(stderr, "Update -    test_315_down.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_315_right.csv") == false);
+    fprintf(stderr, "Update -    test_315_right.csv complete ...");
+    ERR_OUT(lr_core_csv_tests("./test_315_left.csv") == false);
+    fprintf(stderr, "Update -    test_315_left.csv complete ...");
 
     return true;
 }
