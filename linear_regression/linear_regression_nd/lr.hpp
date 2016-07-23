@@ -17,7 +17,7 @@ typedef struct weights {
     /* Vector of weights; The offset/bias
      * is the very last value
      */
-    vector<float> w;
+    vector<double> w;
 
     weights() {
         w.clear();
@@ -30,7 +30,7 @@ typedef struct weights {
            w.push_back(rand() % 100);
         }
     }
-    weights(vector<float> w_) {
+    weights(vector<double> w_) {
         w = w_;
     }
 
@@ -48,12 +48,12 @@ typedef struct lr_input {
     /* feature points - x0, x1, x2 ... 
      * This is a vector of feature vectors
      */
-    vector<vector<float> > features;
+    vector<vector<double> > features;
     /* Actual values - y */
-    vector<float> y;
+    vector<double> y;
 
     /* Learning parameters */
-    float learning_rate;
+    double learning_rate;
     int epoch;
     
     lr_input() {
@@ -62,7 +62,7 @@ typedef struct lr_input {
         epoch = 10000;
     }
     
-    lr_input(vector<vector<float> > features_, vector<float> y_, float learning_rate_, int epoch_) {
+    lr_input(vector<vector<double> > features_, vector<double> y_, double learning_rate_, int epoch_) {
         /* Make copies of the inputs vectors */
         features = features_;
         y = y_;
@@ -70,7 +70,7 @@ typedef struct lr_input {
         epoch = epoch_;
     }
 
-    lr_input(vector<vector<float> > features_, vector<float> y_) {
+    lr_input(vector<vector<double> > features_, vector<double> y_) {
         /* Make copies of the input vectors */
         features = features_;
         y = y_;
@@ -107,9 +107,9 @@ int construct_weights(weights &w, const string filename);
  *                     clears the contents of result weights before use
  *      init_weights - Initialization weights; if vector in init_weights
  *                     is empty; then weights are randomly initialized 
- * Return FLT_MAX incase of error;
+ * Return DBL_MAX incase of error;
  * Return 0 incase of success;
  */
-float perform_linear_regression(const lr_input &input, weights &result, const weights &init_weights);
+double perform_linear_regression(const lr_input &input, weights &result, const weights &init_weights);
 
 #endif // __LR_HPP__

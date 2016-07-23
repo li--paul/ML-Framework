@@ -80,7 +80,7 @@ bool validate_inputs(lr_input &ip, weights &w) {
 
 #ifdef DEBUG
 void summarize_run(lr_input &ip, weights &w, int e) {
-    float cost = cost_function(ip.features, ip.y, w.w);
+    double cost = cost_function(ip.features, ip.y, w.w);
     fprintf(stderr, "%d | %f | ", e, cost);
     for(int w_iter = 0; w_iter < w.w.size(); w_iter++) {
         fprintf(stderr, " %f,", w.w[w_iter]);
@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
             return -1;
         }
     }
-    float learning_rate = (float)atof(learning_rate_arg.c_str());
+    double learning_rate = (double)atof(learning_rate_arg.c_str());
     regression_input.learning_rate = (learning_rate == 0) ? regression_input.learning_rate : learning_rate;
 
     int epoch = (int)atof(epoch_arg.c_str());
@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
         int this_cost = 0;
         while(last_cost != this_cost) {
             last_cost = this_cost;
-            float ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
+            double ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
             assert(ret_val == 0);
             regression_weights = result_weights;
             this_cost = cost_function(regression_input.features, regression_input.y, regression_weights.w);
@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
     fclose(fp_input);
 
 #ifdef NUDGE_WEIGHTS
-    float last_cost = 0; 
+    double last_cost = 0; 
 #endif
 
     int epoch_done = 0;
@@ -208,7 +208,7 @@ int main(int argc, char *argv[]) {
 
         /* Run regression */
         regression_input.epoch = epoch_current;
-        float ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
+        double ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
         assert(ret_val == 0);
 
         /* Dump data */
@@ -226,7 +226,7 @@ int main(int argc, char *argv[]) {
         fclose(fp);
 
 #ifdef NUDGE_WEIGHTS
-        float current_cost = cost_function(regression_input.features, regression_input.y, result_weights.w);
+        double current_cost = cost_function(regression_input.features, regression_input.y, result_weights.w);
         if(last_cost == current_cost) {
             srand(time(NULL));
             // Randomly restart one of the weights

@@ -102,22 +102,22 @@ vector<vector<string> > get_tokens(const vector<string> lines) {
 }
 
 /*
- * Given a file; returns vector<vector<float> > 
+ * Given a file; returns vector<vector<double> > 
  */
-vector<vector<float> > get_tokens_as_float(const string file_name) {
+vector<vector<double> > get_tokens_as_double(const string file_name) {
     vector<string> lines = get_lines(file_name);
     vector<vector<string> > tokens = get_tokens(lines);
-    vector<vector<float> > tok_as_float;
+    vector<vector<double> > tok_as_double;
 
     for(unsigned int token_i = 0; token_i < tokens.size(); token_i++) {
-        vector<float> ip;
+        vector<double> ip;
         for(unsigned int token_j = 0; token_j < tokens[token_i].size(); token_j++) {
             double value = atof(tokens[token_i][token_j].c_str());
-            ip.push_back((float)value);
+            ip.push_back((double)value);
         }
-        tok_as_float.push_back(ip);
+        tok_as_double.push_back(ip);
     }
-    return tok_as_float;
+    return tok_as_double;
 }
 
 /*
@@ -175,13 +175,13 @@ bool validate_csv(const string file_name) {
 }
 
 /*
- * csv file -> vector<vector<float> >;
+ * csv file -> vector<vector<double> >;
  * supports only ',' as a delimiter;
- * This is a wrapper function that just called get_tokens_as_float 
+ * This is a wrapper function that just called get_tokens_as_double 
  * Returns 0 for Success;
  * Return -1 for failure;
  */
-int csv_vec_vec_float(vector<vector<float> > &op, const string file_name) {
+int csv_vec_vec_double(vector<vector<double> > &op, const string file_name) {
     if(!file_exists(file_name)) {
         cerr<<"CSV file does not exist !"<<__FILE__<<" "<<__LINE__<<endl;
         return -1;
@@ -190,6 +190,6 @@ int csv_vec_vec_float(vector<vector<float> > &op, const string file_name) {
         cerr<<"CSV file contains undesirable characters !"<<__FILE__<<" "<<__LINE__<<endl;
         return -1;
     }
-    op = get_tokens_as_float(file_name);
+    op = get_tokens_as_double(file_name);
     return 0;
 }

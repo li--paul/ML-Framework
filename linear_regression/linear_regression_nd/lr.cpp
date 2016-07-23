@@ -8,13 +8,13 @@
 #include <cfloat>
 #include <cstdio>
 
-#define ERR_OUT(stmt) if(stmt) { cerr<<"Error out - "<<__FILE__<<" - "<<__LINE__<<endl;  return FLT_MAX; }
+#define ERR_OUT(stmt) if(stmt) { cerr<<"Error out - "<<__FILE__<<" - "<<__LINE__<<endl;  return DBL_MAX; }
 
 /* Define utilities first */
 /*
  * Split the csv data vector into features and expected outputs;
  */
-void split_csv_vector(vector<vector<float> > &inputs, vector<vector<float> > &f, vector<float> &y) {
+void split_csv_vector(vector<vector<double> > &inputs, vector<vector<double> > &f, vector<double> &y) {
     unsigned int num_rows = inputs.size();
     assert(num_rows != 0);
     unsigned int num_cols = inputs[0].size();
@@ -27,7 +27,7 @@ void split_csv_vector(vector<vector<float> > &inputs, vector<vector<float> > &f,
 
     /* Fill features matrix */
     for(unsigned int row = 0; row < num_rows; row++) {
-        vector<float> feature_vector;
+        vector<double> feature_vector;
         for(unsigned int col = 0; col < num_cols - 1; col++) {
             feature_vector.push_back(inputs[row][col]);
         }
@@ -44,9 +44,9 @@ void split_csv_vector(vector<vector<float> > &inputs, vector<vector<float> > &f,
  * Returns -1 for failure
  */
 int construct_input(lr_input &ip, const string filename) {
-    vector<vector<float> > inputs;
-    if(csv_vec_vec_float(inputs, filename) != 0) {
-        cerr<<"CSV to vector<vector<float> > issue "<<__FILE__<<" "<<__LINE__<<endl;
+    vector<vector<double> > inputs;
+    if(csv_vec_vec_double(inputs, filename) != 0) {
+        cerr<<"CSV to vector<vector<double> > issue "<<__FILE__<<" "<<__LINE__<<endl;
         return -1;
     }
     if(inputs.size() == 0) {
@@ -71,8 +71,8 @@ int construct_input(lr_input &ip, const string filename) {
         }
     }
 
-    vector<vector<float> > features;
-    vector<float> y;
+    vector<vector<double> > features;
+    vector<double> y;
     split_csv_vector(inputs, features, y);
     assert(features.size() == y.size());
     assert(features.size() != 0);
@@ -91,9 +91,9 @@ int construct_input(lr_input &ip, const string filename) {
  * Returns -1 for success
  */
 int construct_weights(weights &w, const string filename) {
-    vector<vector<float> > w_csv;
-    if(csv_vec_vec_float(w_csv, filename) != 0) {
-        cerr<<"CSV to vector<vector<float> > issue "<<__FILE__<<" "<<__LINE__<<endl;
+    vector<vector<double> > w_csv;
+    if(csv_vec_vec_double(w_csv, filename) != 0) {
+        cerr<<"CSV to vector<vector<double> > issue "<<__FILE__<<" "<<__LINE__<<endl;
         return -1;
     }
     if(w_csv.size() != 1 && w_csv.size() != 0) {
@@ -108,14 +108,14 @@ int construct_weights(weights &w, const string filename) {
 
 /*
  * Given features and weights, evaluate the hypothesis function.
- * Return FLT_MAX in case of error.
+ * Return DBL_MAX in case of error.
  * Any other value is considered success (hypothesis result).
  */
-float hypothesis(const vector<float> &feature_vector, const vector<float> &w) {
+double hypothesis(const vector<double> &feature_vector, const vector<double> &w) {
     /* Weights vector will have one extra element (bias) */
     ERR_OUT(feature_vector.size() != w.size() - 1);
 
-    float output = 0;
+    double output = 0;
     for(unsigned int feature_iter = 0; feature_iter < feature_vector.size(); feature_iter++) {
         output += feature_vector[feature_iter] * w[feature_iter];
     }
@@ -125,19 +125,19 @@ float hypothesis(const vector<float> &feature_vector, const vector<float> &w) {
 
 /* 
  * Calculate the cost of using current weights.
- * Return FLT_MAX in case of error.
+ * Return DBL_MAX in case of error.
  * Any other value is considered success (Cost).
  */
-float cost_function(const vector<vector<float> > &features,
-                    const vector<float> &y,
-                    const vector<float> &w) {
+double cost_function(const vector<vector<double> > &features,
+                    const vector<double> &y,
+                    const vector<double> &w) {
     ERR_OUT(features.size() == 0);
     ERR_OUT(y.size() == 0);
     ERR_OUT(w.size() == 0);
     ERR_OUT(features[0].size() != w.size() - 1);
     ERR_OUT(features.size() != y.size());
     int n = features.size();
-    float cost = 0;
+    double cost = 0;
 
     for(int iter = 0; iter < n; iter++) {
         ERR_OUT(features[iter].size() != w.size() - 1);
@@ -149,8 +149,8 @@ float cost_function(const vector<vector<float> > &features,
      * Cost function : summation over all inputs( (h(x0, x1 ...xk) - y) * (h(x0, x1 ...xk) - y) )
      */
     for(int iter = 0; iter < n; iter++) {
-        float hypothesis_result = hypothesis(features[iter], w);
-        assert(hypothesis_result != FLT_MAX);
+        double hypothesis_result = hypothesis(features[iter], w);
+        assert(hypothesis_result != DBL_MAX);
         cost += (hypothesis_result - y[iter]) *
                 (hypothesis_result - y[iter]); 
     } 
@@ -160,12 +160,12 @@ float cost_function(const vector<vector<float> > &features,
 
 /* 
  * Calculate the slope of cost function w.r.t. a particular weight.
- * Return FLT_MAX in case of error.
+ * Return DBL_MAX in case of error.
  * Any other value is considered a Success (slope).
  */
-float cost_function_weight_slope(   const vector<vector<float> > &features,
-                                    const vector<float> &y,
-                                    const vector<float> &w,
+double cost_function_weight_slope(   const vector<vector<double> > &features,
+                                    const vector<double> &y,
+                                    const vector<double> &w,
                                     const int weight_index) {
     ERR_OUT(features.size() == 0);
     ERR_OUT(y.size() == 0);
@@ -188,24 +188,24 @@ float cost_function_weight_slope(   const vector<vector<float> > &features,
      */
     int n = features.size();
     int this_weight_is_not_bias = ((unsigned long)weight_index < w.size() - 1);
-    float slope = 0;
+    double slope = 0;
 
     for(int iter = 0; iter < n; iter++) {
-        float hypothesis_result = hypothesis(features[iter], w);
-        assert(hypothesis_result != FLT_MAX);
+        double hypothesis_result = hypothesis(features[iter], w);
+        assert(hypothesis_result != DBL_MAX);
         slope += (hypothesis_result - y[iter]) * 
                  ((features[iter][weight_index] * this_weight_is_not_bias) + (1 * !this_weight_is_not_bias)); 
     } 
     
-    return (slope * ((float)1 / (float)(n)));
+    return (slope * ((double)1 / (double)(n)));
 }
 
 /*
  * Perform linear regression for the given data points;
- * Return FLT_MAX incase of error;
+ * Return DBL_MAX incase of error;
  * Return 0 incase of success;
  */
-float perform_linear_regression(  const lr_input &input,
+double perform_linear_regression(  const lr_input &input,
                                   weights &result_weights,
                                   const weights &init_weights) {
     /* Make sure feature's x and y dim are not empty */
@@ -234,17 +234,17 @@ float perform_linear_regression(  const lr_input &input,
     }
 
     /* Use references from here on */
-    vector<float> &w = result_weights.w;
-    const vector<float> &y = input.y;
-    const vector<vector<float> > &features = input.features;
+    vector<double> &w = result_weights.w;
+    const vector<double> &y = input.y;
+    const vector<vector<double> > &features = input.features;
 
 
     int iter = 0;
     while(iter < input.epoch) {
-        vector<float> weight_slopes;
+        vector<double> weight_slopes;
         for(unsigned int weight_iter = 0; weight_iter < w.size(); weight_iter++) {
-            float slope = cost_function_weight_slope( features, y, w, weight_iter);
-            assert(slope != FLT_MAX);
+            double slope = cost_function_weight_slope( features, y, w, weight_iter);
+            assert(slope != DBL_MAX);
             slope *= input.learning_rate;
             weight_slopes.push_back(slope);
         }
