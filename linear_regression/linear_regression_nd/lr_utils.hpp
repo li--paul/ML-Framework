@@ -18,6 +18,7 @@ double hypothesis(const vector<double> &feature_vector, const vector<double> &w)
 
 
 /* 
+ * TODO : Make the return value -1 incase of error!
  * Calculate the cost of using current weights.
  * Return DBL_MAX in case of error.
  * Any other value is considered success (Cost).
@@ -27,6 +28,7 @@ double cost_function(const vector<vector<double> > &features,
                     const vector<double> &w);
 
 /* 
+ * TODO : Do something about its return value
  * Calculate the slope of cost function w.r.t. a particular weight.
  * Return DBL_MAX in case of error.
  * Any other value is considered a Success (slope).

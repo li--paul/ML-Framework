@@ -19,6 +19,10 @@ void split_csv_vector(vector<vector<double> > &inputs, vector<vector<double> > &
     assert(num_rows != 0);
     unsigned int num_cols = inputs[0].size();
     assert(num_cols != 0);
+    
+    /*
+     * TODO : assert f and y to be empty
+     */
 
     /* Fill expected outputs vector */
     for(unsigned int row = 0; row < num_rows; row++) {

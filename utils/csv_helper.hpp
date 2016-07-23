@@ -14,7 +14,7 @@ using namespace std;
 /*
  * csv file -> vector<vector<double> >;
  * supports only ',' as a delimiter;
- * This is a wrapper function that just called get_tokens_as_float 
+ * This is a wrapper function that just called get_tokens_as_double 
  * Returns 0 for Success;
  * Return -1 for failure;
  */

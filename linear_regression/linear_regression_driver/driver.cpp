@@ -17,7 +17,7 @@ using namespace std;
 // If the cost does not seem to lessen
 // random init one of the weights as 
 // a kick start
-#define NUDGE_WEIGHTS
+//#define NUDGE_WEIGHTS
 #endif // WEB_RUN
 
 void print_help() {
