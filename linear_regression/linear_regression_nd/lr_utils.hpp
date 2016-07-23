@@ -10,30 +10,33 @@
 using namespace std;
 
 /*
+ * TODO : Make the return value -1
  * Given features and weights, evaluate the hypothesis function.
- * Return FLT_MAX in case of error.
+ * Return DBL_MAX in case of error.
  * Any other value is considered success (hypothesis result).
  */
-float hypothesis(const vector<float> &feature_vector, const vector<float> &w);
+double hypothesis(const vector<double> &feature_vector, const vector<double> &w);
 
 
 /* 
+ * TODO : Make the return value -1 incase of error!
  * Calculate the cost of using current weights.
- * Return FLT_MAX in case of error.
+ * Return DBL_MAX in case of error.
  * Any other value is considered success (Cost).
  */
-float cost_function(const vector<vector<float> > &features,
-                    const vector<float> &y,
-                    const vector<float> &w);
+double cost_function(const vector<vector<double> > &features,
+                    const vector<double> &y,
+                    const vector<double> &w);
 
 /* 
+ * TODO : Do something about its return value
  * Calculate the slope of cost function w.r.t. a particular weight.
- * Return FLT_MAX in case of error.
+ * Return DBL_MAX in case of error.
  * Any other value is considered a Success (slope).
  */
-float cost_function_weight_slope(   const vector<vector<float> > &features,
-                                    const vector<float> &y,
-                                    const vector<float> &w,
+double cost_function_weight_slope(   const vector<vector<double> > &features,
+                                    const vector<double> &y,
+                                    const vector<double> &w,
                                     const int weight_index);
         
 

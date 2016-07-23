@@ -17,7 +17,7 @@ using namespace std;
 // If the cost does not seem to lessen
 // random init one of the weights as 
 // a kick start
-#define NUDGE_WEIGHTS
+//#define NUDGE_WEIGHTS
 #endif // WEB_RUN
 
 void print_help() {
@@ -78,6 +78,18 @@ bool validate_inputs(lr_input &ip, weights &w) {
     return true;
 }
 
+#ifdef DEBUG
+void summarize_run(lr_input &ip, weights &w, int e) {
+    double cost = cost_function(ip.features, ip.y, w.w);
+    fprintf(stderr, "%d | %f | ", e, cost);
+    for(int w_iter = 0; w_iter < w.w.size(); w_iter++) {
+        fprintf(stderr, " %f,", w.w[w_iter]);
+    }
+    fprintf(stderr, "\n");
+} 
+#endif
+
+
 int main(int argc, char *argv[]) {
 #ifdef WEB_RUN
     if (argc < 6) {
@@ -124,7 +136,7 @@ int main(int argc, char *argv[]) {
             return -1;
         }
     }
-    float learning_rate = (float)atof(learning_rate_arg.c_str());
+    double learning_rate = (double)atof(learning_rate_arg.c_str());
     regression_input.learning_rate = (learning_rate == 0) ? regression_input.learning_rate : learning_rate;
 
     int epoch = (int)atof(epoch_arg.c_str());
@@ -145,14 +157,18 @@ int main(int argc, char *argv[]) {
         weights result_weights;
 
         int iter = 0;
-        while(iter < 10) {
-            float ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
+        // Run till the cost is stagnant
+        int last_cost = -1;
+        int this_cost = 0;
+        while(last_cost != this_cost) {
+            last_cost = this_cost;
+            double ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
             assert(ret_val == 0);
             regression_weights = result_weights;
-            float cost = cost_function(regression_input.features, regression_input.y, result_weights.w);
-            cout<<"Iteration "<<iter<<" : "<<cost<<endl;
+            this_cost = cost_function(regression_input.features, regression_input.y, regression_weights.w);
             iter++;
         }
+        summarize_run(regression_input, regression_weights, regression_input.epoch * iter);
     }
 #endif
 
@@ -175,7 +191,7 @@ int main(int argc, char *argv[]) {
     fclose(fp_input);
 
 #ifdef NUDGE_WEIGHTS
-    float last_cost = 0; 
+    double last_cost = 0; 
 #endif
 
     int epoch_done = 0;
@@ -192,7 +208,7 @@ int main(int argc, char *argv[]) {
 
         /* Run regression */
         regression_input.epoch = epoch_current;
-        float ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
+        double ret_val = perform_linear_regression(regression_input, result_weights, regression_weights);
         assert(ret_val == 0);
 
         /* Dump data */
@@ -210,7 +226,7 @@ int main(int argc, char *argv[]) {
         fclose(fp);
 
 #ifdef NUDGE_WEIGHTS
-        float current_cost = cost_function(regression_input.features, regression_input.y, result_weights.w);
+        double current_cost = cost_function(regression_input.features, regression_input.y, result_weights.w);
         if(last_cost == current_cost) {
             srand(time(NULL));
             // Randomly restart one of the weights
