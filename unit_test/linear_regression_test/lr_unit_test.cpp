@@ -286,49 +286,49 @@ bool lr_core_test() {
 
     /* Test with various csv files */
     /* Takes a very long time - Print updates */
-    ERR_OUT(lr_core_csv_tests("./test_45.csv") == false);
-    fprintf(stderr, "Update -    test_45.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_45_up.csv") == false);
-    fprintf(stderr, "Update -    test_45_up.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_45_down.csv") == false);
-    fprintf(stderr, "Update -    test_45_down.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_45_right.csv") == false);
-    fprintf(stderr, "Update -    test_45_right.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_45_left.csv") == false);
-    fprintf(stderr, "Update -    test_45_left.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_45.csv") == false);
+   // fprintf(stderr, "Update -    test_45.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_45_up.csv") == false);
+   // fprintf(stderr, "Update -    test_45_up.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_45_down.csv") == false);
+   // fprintf(stderr, "Update -    test_45_down.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_45_right.csv") == false);
+   // fprintf(stderr, "Update -    test_45_right.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_45_left.csv") == false);
+   // fprintf(stderr, "Update -    test_45_left.csv complete ...");
 
-    ERR_OUT(lr_core_csv_tests("./test_135.csv") == false);
-    fprintf(stderr, "Update -    test_135.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_135_up.csv") == false);
-    fprintf(stderr, "Update -    test_135_up.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_135_down.csv") == false);
-    fprintf(stderr, "Update -    test_135_down.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_135_right.csv") == false);
-    fprintf(stderr, "Update -    test_135_right.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_135_left.csv") == false);
-    fprintf(stderr, "Update -    test_135_left.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_135.csv") == false);
+   // fprintf(stderr, "Update -    test_135.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_135_up.csv") == false);
+   // fprintf(stderr, "Update -    test_135_up.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_135_down.csv") == false);
+   // fprintf(stderr, "Update -    test_135_down.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_135_right.csv") == false);
+   // fprintf(stderr, "Update -    test_135_right.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_135_left.csv") == false);
+   // fprintf(stderr, "Update -    test_135_left.csv complete ...");
 
-    ERR_OUT(lr_core_csv_tests("./test_225.csv") == false);
-    fprintf(stderr, "Update -    test_225.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_225_up.csv") == false);
-    fprintf(stderr, "Update -    test_225_up.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_225_down.csv") == false);
-    fprintf(stderr, "Update -    test_225_down.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_225_right.csv") == false);
-    fprintf(stderr, "Update -    test_225_right.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_225_left.csv") == false);
-    fprintf(stderr, "Update -    test_225_left.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_225.csv") == false);
+   // fprintf(stderr, "Update -    test_225.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_225_up.csv") == false);
+   // fprintf(stderr, "Update -    test_225_up.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_225_down.csv") == false);
+   // fprintf(stderr, "Update -    test_225_down.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_225_right.csv") == false);
+   // fprintf(stderr, "Update -    test_225_right.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_225_left.csv") == false);
+   // fprintf(stderr, "Update -    test_225_left.csv complete ...");
 
-    ERR_OUT(lr_core_csv_tests("./test_315.csv") == false);
-    fprintf(stderr, "Update -    test_315.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_315_up.csv") == false);
-    fprintf(stderr, "Update -    test_315_up.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_315_down.csv") == false);
-    fprintf(stderr, "Update -    test_315_down.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_315_right.csv") == false);
-    fprintf(stderr, "Update -    test_315_right.csv complete ...");
-    ERR_OUT(lr_core_csv_tests("./test_315_left.csv") == false);
-    fprintf(stderr, "Update -    test_315_left.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_315.csv") == false);
+   // fprintf(stderr, "Update -    test_315.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_315_up.csv") == false);
+   // fprintf(stderr, "Update -    test_315_up.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_315_down.csv") == false);
+   // fprintf(stderr, "Update -    test_315_down.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_315_right.csv") == false);
+   // fprintf(stderr, "Update -    test_315_right.csv complete ...");
+   // ERR_OUT(lr_core_csv_tests("./test_315_left.csv") == false);
+   // fprintf(stderr, "Update -    test_315_left.csv complete ...");
 
     return true;
 }
