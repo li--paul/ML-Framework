@@ -1,3 +1,7 @@
+coverage:
+	g++ -fprofile-arcs -ftest-coverage -g -DDEBUG lr_unit_test.cpp ./../../linear_regression/linear_regression_nd/lr.cpp ./../../utils/csv_helper.cpp -o lr_unit_test_coverage
+	./lr_unit_test_coverage
+	gcov lr.cpp
 test:
 	 g++ lr_unit_test.cpp ./../../linear_regression/linear_regression_nd/lr.cpp ./../../utils/csv_helper.cpp -o lr_unit_test
 	 ./lr_unit_test
@@ -8,7 +12,11 @@ web-run:
 	 ./lr_unit_test_web_run
 web-run-debug:
 	 g++  -g -DWEB_RUN -DDEBUG lr_unit_test.cpp ./../../linear_regression/linear_regression_nd/lr.cpp ./../../utils/csv_helper.cpp -o lr_unit_test_web_run
+
 clean:
+	 rm *gcov
+	 rm *gcda
+	 rm *gcno
 	 rm ./lr_unit_test
 	 rm ./lr_unit_test_web_run
 	 rm ./lr_dump.txt
