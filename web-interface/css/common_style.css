@@ -1,0 +1,57 @@
+.header {
+    /* Where its placed */
+    position:    absolute;
+    top:         4px;
+    /* Dimensions */
+    height:      50px;
+    width:       99%;
+    /* Beautification */
+    box-shadow:  0px 1px 8px #000;
+    background:  #ccc;
+    /* Fonts */
+    font-size:   23px;
+    font-weight: bold;
+    text-align:  center;
+    /* Other attributes */
+    min-width:   1000px;
+}
+.mainbody {
+    /* Where its placed */
+    position:    absolute;
+    top:         58px;
+    bottom:      25px;
+    /* Dimensions */
+    width:       99%;
+    /* Beautification */
+    box-shadow:  0px 1px 8px #000;
+    background:  mediumaquamarine;
+    /* Other attributes */
+    min-width:   1000px;
+}
+.footer {
+    /* Where its palced */
+    position:    absolute;
+    bottom:      0px;
+    /* Dimensions */
+    width:       99%;
+    height:      20px;
+    /* Beautification */
+    background:  #ccc;
+    box-shadow:  0px 1px 8px #000;
+    /* Font */
+    font-size:   10px;
+    text-align:  center;
+    /* Other attr. */
+    min-width:   1000px;
+}
+
+.h1 {
+    font-size:   40px;
+    height:      56px;
+    line-height: 56px;
+}
+
+.h2 {
+    font-size:   20px;
+}
+
