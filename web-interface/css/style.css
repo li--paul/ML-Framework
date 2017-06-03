@@ -1,17 +1,19 @@
-#interface_container {
-    margin-top: 6px;
-    background: mediumaquamarine;
-    box-shadow:0px 1px 8px #000;
-    width: 100%;
-    height: 100%;
-    min-width: 1000px;
-    min-height: 1000px;
-}
-#doorway_button {
-    width:            100px;
-    height:           100px;
+.doorway_button {
+    /* Where its placed */
     position:         relative;
-    top:              40%;
-    left:             44%;
-    background-color: green;
+    top:              5%;
+    margin-right:     5px;
+    margin-left:      5px;
+    /* Dimensions */
+    width:            49%;
+    height:           90%;
+    /* Beautification */
+    background-color: #333333;
+    border-radius:    200px;
+    box-shadow:       -2px 3px 28px #b30000;
+    /* Font */
+    font-family:      Courier;
+    font-size:        -webkit-xxx-large;
+    font-weight:      bold;
+    color:            #ccc;
 }
